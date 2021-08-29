@@ -19,8 +19,6 @@ check-mr:
   image: eu.gcr.io/shad-ts/grader/py-base-image
   tags:
     - docker-tester-python
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
   only:
     variables:
       - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/ || $CI_COMMIT_BRANCH =~ /contributing/

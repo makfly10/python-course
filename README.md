@@ -109,7 +109,7 @@ git config --local user.name "<твой логин с py.manytask.org>"
 git config --local user.email "<твой емейл с py.manytask.org>"
 
 # Настраиваем возможность получать обновления из публичного репозитория с задачами
-git remote add upstream git@gitlab.manytask.org:py-tasks/tasks-2021-fall.git
+git remote add upstream git@gitlab.manytask.org:py-tasks/public-2021-fall.git
 ```
 
 #### Установка интерпретатора и доп. пакетов
@@ -282,7 +282,7 @@ Connection to gitlab.manytask.org closed.
 > git config --local user.email "<твой емейл с py.manytask.org>"
 
 # Настраиваем возможность получать обновления из публичного репозитория с задачами
-> git remote add upstream git@gitlab.manytask.org:py-tasks/tasks-2021-fall.git
+> git remote add upstream git@gitlab.manytask.org:py-tasks/public-2021-fall.git
 ```
 
 #### Установка интерпретатора и доппакетов
@@ -479,7 +479,7 @@ git push origin <your-contributing-branch-name>
 ```
 5. Зайдите в свой репозиторий на [gitlab.manytask.org](gitlab.manytask.org), нажмите слева на панели `Merge Requests -> New merge request`
 6. Выберите `source branch`: имя вашего репозитория + имя вашей ветки <your-branch-name>
-7. Выберите `target branch`: py-tasks/tasks-2021-fall + master
+7. Выберите `target branch`: py-tasks/public-2021-fall + master
 8. Нажмите `Compare branches and continue`
 9. Задайте название и описание вашего реквеста. Внизу страницы посмотрите изменения (вкладка Changes), если все ок, то жмите `Submit merge request`
 
@@ -505,7 +505,7 @@ git branch remove <your-contributing-branch-name>
 <details><summary><b>Как открыть ноутбук с лекцией?</b></summary>
 
 После того, как вы настроили окружение
-по [инструкции](https://gitlab.manytask.org/py-tasks/tasks-2021-fall/blob/master/README.md):
+по [инструкции](https://gitlab.manytask.org/py-tasks/public-2021-fall/blob/master/README.md):
 
 ```bash
 # Устанавливаем jupyter
