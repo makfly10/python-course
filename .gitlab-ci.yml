@@ -14,8 +14,8 @@ grade:
   timeout: 10 minutes
 
     
-# Checking MR to main repo
-check-mr:
+# Checking contribution to the main repo
+check:
   image: eu.gcr.io/shad-ts/grader/py-base-image
   tags:
     - docker-tester-python
@@ -35,7 +35,10 @@ check-mr:
     - echo "CI_MERGE_REQUEST_LABELS $CI_MERGE_REQUEST_LABELS"
     - echo "CI_MERGE_REQUEST_APPROVED $CI_MERGE_REQUEST_APPROVED"
     - echo "CI_MERGE_REQUEST_EVENT_TYPE $CI_MERGE_REQUEST_EVENT_TYPE"
-    - cd tests
-    - ls -lah tests
-    - python3 grade.py check
-  timeout: 15 minutes
+    - ls -lah
+    - cp -R /opt/shad/tests tests/
+    - ls -lah
+    - cd tests/
+    - ls -lah
+    - env PYTHONPATH=. python3 grade.py check
+  timeout: 20 minutes
