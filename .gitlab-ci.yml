@@ -16,7 +16,7 @@ grade:
     
 # Checking contribution to the main repo
 check:
-  image: eu.gcr.io/shad-ts/grader/py-base-image
+  image: eu.gcr.io/shad-ts/grader/py-testenv
   tags:
     - docker-tester-python
   only:
