@@ -1,4 +1,5 @@
 shad_env/
+lectures_build/
 .idea/
 build/
 .DS_Store
