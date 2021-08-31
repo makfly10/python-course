@@ -5,11 +5,10 @@ grade:
     - docker-tester-python
   except:
     variables:
-      - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/
-      - $CI_COMMIT_BRANCH =~ /contributing/
-      - $CI_PROJECT_NAME =~ /^public-/
+      - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/ || $CI_COMMIT_BRANCH =~ /contributing/
+      - $CI_PROJECT_NAME =~ /^public-(fall|spring)-20\d\d/
   script:
-    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%ct $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
+    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%cI $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
     - cd /opt/shad/tests
     - chmod -R 777 /opt/shad/tests
     - python3 grade.py grade
