@@ -8,6 +8,7 @@ grade:
       - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/
       - $CI_COMMIT_BRANCH =~ /contributing/
   script:
+    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%ct $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
     - cd /opt/shad/tests
     - chmod -R 777 /opt/shad/tests
     - python3 grade.py grade
