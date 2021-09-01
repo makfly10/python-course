@@ -374,7 +374,8 @@ cd "/mnt/c/Users/<username>/My Documents"
 - заготовка в кодом задачи обычно лежит в файле с именем задачи `hello_world.py`
 - публичные тесты к задаче находятся в файле `test_public.py`
 
-<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/61R3a4q.png" width=800/></details>
+[comment]: <> (<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/61R3a4q.png" width=800/></details>)
+<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/4EtnZWG.png" width=800/></details>
 
 Вам нужно дописать код в файл с именем задачи.
 
@@ -442,14 +443,15 @@ git push origin master
 Там можно увидеть статусы посылок и результаты тестирования.
 
 Выглядит это обычно так:
-- Информация о последнем коммите
-- Тестируемая задача (может быть несколько в одном коммите)
-- Проверка стиля (PEP8)
-- Проверка типов (type hints)
-- Поиск тестов
-- Запуск тестов и их результат
+- Информация о последнем коммите и изменённых файлах
+- Для каждой тестируемой задачи (может быть несколько в одном коммите)
+  - Проверка стиля (PEP8)
+  - Проверка типов (type hints)
+  - Поиск тестов
+  - Запуск тестов и их результат
 
-<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/mgMXP1z.png" width=800/></details>
+[comment]: <> (<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/mgMXP1z.png" width=800/></details>)
+<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/mehIkFl.png" width=800/></details>
 
 Если хоть одна задача падает на тестах, в интерфейсе гитлаба запуск будет считаться неудавшимся (failed). Если хоть одна задача в комплекте прошла - баллы за неё поставятся в систему независимо от остальных. 
 </details>
