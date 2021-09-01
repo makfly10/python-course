@@ -5,21 +5,22 @@ grade:
     - docker-tester-python
   except:
     variables:
-      - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/ || $CI_COMMIT_BRANCH =~ /contributing/
-      - $CI_PROJECT_NAME =~ /^public-(fall|spring)-20\d\d/
+      - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/
+      - $CI_COMMIT_BRANCH =~ /contributing/
   script:
-    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%cI $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
     - cd /opt/shad/tests
     - chmod -R 777 /opt/shad/tests
     - python3 grade.py grade
   timeout: 10 minutes
 
     
-# Checking contribution to the main repo
-check:
-  image: eu.gcr.io/shad-ts/grader/py-testenv
+# Checking MR to main repo
+check-mr:
+  image: eu.gcr.io/shad-ts/grader/py-base-image
   tags:
     - docker-tester-python
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   only:
     variables:
       - $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /contributing/ || $CI_COMMIT_BRANCH =~ /contributing/
@@ -36,10 +37,7 @@ check:
     - echo "CI_MERGE_REQUEST_LABELS $CI_MERGE_REQUEST_LABELS"
     - echo "CI_MERGE_REQUEST_APPROVED $CI_MERGE_REQUEST_APPROVED"
     - echo "CI_MERGE_REQUEST_EVENT_TYPE $CI_MERGE_REQUEST_EVENT_TYPE"
-    - ls -lah
-    - cp -R /opt/shad/tests tests/
-    - ls -lah
-    - cd tests/
-    - ls -lah
-    - env PYTHONPATH=. python3 grade.py check
-  timeout: 20 minutes
+    - cd tests
+    - ls -lah tests
+    - python3 grade.py check
+  timeout: 15 minutes
