@@ -16,7 +16,7 @@
 
 В итоге вы должны попасть на главную py.manytask.org:
 
-<img src="https://i.imgur.com/tv6Wk9S.png" width=600/>
+<img src="https://i.imgur.com/FYDgaWj.png" width=600/>
 </details>
 
 <details><summary><b>Настройка окружения в Linux</b></summary>
