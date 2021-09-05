@@ -114,7 +114,7 @@ git remote add upstream git@gitlab.manytask.org:py-tasks/public-2021-fall.git
 
 #### Установка интерпретатора и доп. пакетов
 
-Мы используем версию питона 3.9.6.
+Мы используем версию питона 3.9.7.
 
 - Поставьте [pyenv](https://github.com/pyenv/pyenv#installation)
 ```bash
@@ -137,7 +137,7 @@ eval "$(pyenv virtualenv-init -)"
 
 - Установите нужную версию питона
 ```bash
-pyenv install 3.9.6
+pyenv install 3.9.7
 ```
 Если при установке возникают ошибки, то поставьте нужные пакеты в зависимости от вашего дистрибутива,
 следуя [этой инструкции](https://github.com/pyenv/pyenv/wiki/Common-build-problems).
@@ -146,7 +146,7 @@ pyenv install 3.9.6
 - Разверните виртуальное окружение с нужной версией питона в репозитории с задачами
 ```bash
 cd <путь к склонированному репозиторию с задачами>
-~/.pyenv/versions/3.9.6/bin/python -m venv shad_env
+~/.pyenv/versions/3.9.7/bin/python -m venv shad_env
 ```
 
 - Активируйте виртуальное окружение (будет активным, пока не закроете консоль, либо не выполните `deactivate`)
@@ -167,11 +167,11 @@ source shad_env/bin/activate
 - Проверьте версии:
 ```bash
 (shad_env)$ python --version
-Python 3.9.6
+Python 3.9.7
 (shad_env)$ pytest --version
-pytest 6.2.4
+pytest 6.2.5
 (shad_env)$ flake8 --version
-3.9.2 (mccabe: 0.6.1, pycodestyle: 2.7.0, pyflakes: 2.3.1) CPython 3.9.6 on Linux/Darwin
+3.9.2 (mccabe: 0.6.1, pycodestyle: 2.7.0, pyflakes: 2.3.1) CPython 3.9.7 on Linux/Darwin
 (shad_env)$ mypy --version
 mypy 0.910
 ```
@@ -287,7 +287,7 @@ Connection to gitlab.manytask.org closed.
 
 #### Установка интерпретатора и доппакетов
 
-Мы используем версию питона 3.9.6.
+Мы используем версию питона 3.9.7.
 
 В консоли выполните:
 ```bash
@@ -295,30 +295,30 @@ Connection to gitlab.manytask.org closed.
 > brew install pyenv
 
 # Ставим нужную версию питона
-> pyenv install 3.9.6
+> pyenv install 3.9.7
 python-build: use openssl@1.1 from homebrew
 python-build: use readline from homebrew
-Installing Python-3.9.6...
+Installing Python-3.9.7...
 python-build: use readline from homebrew
 python-build: use zlib from xcode sdk
-Installed Python-3.9.6 to /Users/ilariia/.pyenv/versions/3.9.6
+Installed Python-3.9.7 to /Users/ilariia/.pyenv/versions/3.9.7
 
 # Устанаваливаем пакет для создания виртуального окужения
 > brew install pyenv-virtualenv
 
 # Создаем виртуальное окружение shad_env с интерпретатором нужной версии
-> pyenv virtualenv 3.9.6 shad_env
+> pyenv virtualenv 3.9.7 shad_env
 
 # Ставим в виртуальное окружение пакеты, необходимые для курса
 #   - mypy для проверки типов
 #   - flake8 для проверки на кодстайл
 #   - pytest для тестирования
 #   - другие пакеты для задачек
-> ~/.pyenv/versions/3.9.6/envs/shad_env/bin/pip install --upgrade -r ~/<твой репозиторий>/requirements.txt
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pip install --upgrade -r ~/<твой репозиторий>/requirements.txt
 
 # Наш интерпретатор, который будем везде использовать
-> ~/.pyenv/versions/3.9.6/envs/shad_env/bin/python
-Python 3.9.6 (default, Sep  1 2021, 00:00:00)
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/python
+Python 3.9.7 (default, Sep 7 2021, 00:00:00)
 >>>
 
 ```
@@ -333,7 +333,7 @@ Python 3.9.6 (default, Sep  1 2021, 00:00:00)
 - Разверните меню "Project interpreter", выберите "Existing interpreter"
 - Пропишите путь к установленному интерпретатору
 ```bash
-~/.pyenv/versions/3.9.6/envs/shad_env/bin/python
+~/.pyenv/versions/3.9.7/envs/shad_env/bin/python
 ```
 - Подтвердите создание проекта
 
@@ -399,9 +399,9 @@ NB: Заметьте, что запуск происходит из **корня
 
 ```bash
 > cd <путь к директории с задачами>
-> ~/.pyenv/versions/3.9.6/envs/shad_env/bin/pytest hello_world/  # запуск тестов
-> ~/.pyenv/versions/3.9.6/envs/shad_env/bin/flake8 hello_world/  # запуск линтера и stylecheck'а
-> ~/.pyenv/versions/3.9.6/envs/shad_env/bin/mypy hello_world/    # запуск typecheck'а
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pytest hello_world/  # запуск тестов
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/flake8 hello_world/  # запуск линтера и stylecheck'а
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/mypy hello_world/    # запуск typecheck'а
 ```
 
 NB: Заметьте, что запуск происходит из **корня проекта**. Если хочется запускать из папки с задачей, то нужно **указать путь** до `setup.cfg` как аргумент для `pytest`/`flake8`/`mypy`. 
@@ -511,10 +511,10 @@ git branch remove <your-contributing-branch-name>
 
 ```bash
 # Устанавливаем jupyter
-~$ ~/.pyenv/versions/3.9.6/envs/shad_env/bin/pip install jupyter==1.0.0
+~$ ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pip install jupyter==1.0.0
 
 # Запускаем jupyter
-$ ~/.pyenv/versions/3.9.6/envs/shad_env/bin/jupyter notebook
+$ ~/.pyenv/versions/3.9.7/envs/shad_env/bin/jupyter notebook
 ```
 </details>
 
@@ -522,7 +522,7 @@ $ ~/.pyenv/versions/3.9.6/envs/shad_env/bin/jupyter notebook
 
 ```bash
 # Устанавливаем RISE
-~$ ~/.pyenv/versions/3.9.6/envs/shad_env/bin/pip install rise==5.6.1
+~$ ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pip install rise==5.6.1
 ```
 
 В jupyter notebook появится кнопка "Enter/Exit RISE Slideshow"
@@ -555,7 +555,7 @@ def typecheck(line, cell):
 $ vim ~/.ipython/profile_default/startup/typecheck.py
 
 # Перезапускаем jupyter
-~/.pyenv/versions/3.9.6/envs/shad_env/bin/jupyter notebook
+~/.pyenv/versions/3.9.7/envs/shad_env/bin/jupyter notebook
 ```
 
 </details>
