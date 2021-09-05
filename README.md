@@ -176,6 +176,8 @@ pytest 6.2.5
 mypy 0.910
 ```
 
+<details><summary><a>Картинка</a></summary><img src="https://i.imgur.com/hYZFUE7.png" width=800/></details></br>
+
 #### Установка и настройка IDE
 
 Мы рекомендуем вам воспользоваться [PyCharm](https://www.jetbrains.com/pycharm/download/).
