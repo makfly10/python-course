@@ -323,6 +323,37 @@ Python 3.9.7 (default, Sep 7 2021, 00:00:00)
 
 ```
 
+<details><summary><b>Apple silicon (!)</b></summary>
+Если у вас устройство на `apple silicon m1`, то... удачи вам :3  
+Мы НЕ гарантируем и не обещаем поддержку всего курса на такой архитектуре, но вы можете попробовать.
+
+Вот один из способов установить необходимые пакеты - 
+Выполняем инструкцию выше, но вместо `pip install --upgrade` делаем следующее
+```bash
+# Устанавливаем компиляторы 
+> brew install openblas gfortran
+> export OPENBLAS="$(brew --prefix openblas)"
+# Отдельно ставим биндинговые пакеты
+> pip install cython pybind11 pythran
+# Ставим llvm, который нужен некоторым отдельным пакетам 
+> brew install llvm@11
+> export LLVM_CONFIG="/opt/homebrew/Cellar/llvm@11/11.1.0_2/bin/llvm-config"
+
+# Ставим отдельно llvmlite
+> pip install llvmlite
+# Самое весёлое - пробуем собрать себе капризные библиотеки (это может занять время)
+> pip install --no-binary :all: --no-use-pep517 numpy==1.20.2
+> pip install --no-binary :all: --no-use-pep517 scipy==1.7.1
+> pip install --no-binary :all: --no-use-pep517 pandas==1.3.1
+
+# Ну а теперь ставим всё остальное и молимся чтоб не упало 
+> pip install -r requirements.txt
+
+>>>
+```
+(Проверьте, что тут версии такие же как и в `requirements.txt`)
+</details>
+
 #### Установка и настройка IDE
 
 Мы рекомендуем вам воспользоваться [PyCharm](https://www.jetbrains.com/pycharm/download/).
