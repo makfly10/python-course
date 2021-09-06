@@ -33,7 +33,7 @@ inspect:
   artifacts:
     when: on_failure
     paths:
-      - report.zip
+      - /opt/shad/tests/report.zip
     expire_in: 15 mins
 
     
