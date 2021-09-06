@@ -32,8 +32,7 @@ inspect:
   timeout: 15 minutes
   artifacts:
     when: on_failure
-    paths:
-      - /opt/shad/tests/report.zip
+    paths: [report.zip]
     expire_in: 15 mins
 
     
