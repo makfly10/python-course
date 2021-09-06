@@ -31,7 +31,7 @@ inspect:
     - zip --password $REPORT_PASSWORD report.zip -- report.txt
   timeout: 15 minutes
   artifacts:
-    when: on_failure
+    # when: on_failure
     paths: [report.zip]
     expire_in: 15 mins
 
