@@ -24,6 +24,7 @@ inspect:
     variables:
       - $CI_PROJECT_NAME =~ /^public-(fall|spring)-20\d\d/
   script:
+    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%cI $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
     - cd /opt/shad/tests
     - chmod -R 777 /opt/shad/tests
     - python3 -m checker grade --inspect |& tee -a report.txt
