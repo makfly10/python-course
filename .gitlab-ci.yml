@@ -15,27 +15,27 @@ grade:
   timeout: 10 minutes
 
 # Inspect
-inspect:
-  image: eu.gcr.io/shad-ts/grader/py-testenv
-  when: manual
-  tags:
-    - docker-tester-python
-  except:
-    variables:
-      - $CI_PROJECT_NAME =~ /^public-(fall|spring)-20\d\d/
-  script:
-    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%cI $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
-    - cd /opt/shad/tests
-    - chmod -R 777 /opt/shad/tests
-    - python3 -m checker grade --inspect |& tee -a report.txt
-    - ls -lah |& tee -a report.txt
-    - zip -P $REPORT_PASSWORD -e report.zip report.txt
-  timeout: 15 minutes
-  artifacts:
-    when: on_failure
-    paths:
-      - report.zip
-    expire_in: 15 mins
+#inspect:
+#  image: eu.gcr.io/shad-ts/grader/py-testenv
+#  when: manual
+#  tags:
+#    - docker-tester-python
+#  except:
+#    variables:
+#      - $CI_PROJECT_NAME =~ /^public-(fall|spring)-20\d\d/
+#  script:
+#    - export CI_COMMIT_TIMESTAMP=$(git show -s --format=%cI $CI_COMMIT_SHA)  # TODO: remove after gitlab 13.4 upgrade
+#    - cd /opt/shad/tests
+#    - chmod -R 777 /opt/shad/tests
+#    - python3 -m checker grade --inspect |& tee -a report.txt
+#    - ls -lah |& tee -a report.txt
+#    - zip -P $REPORT_PASSWORD -e report.zip report.txt
+#  timeout: 15 minutes
+#  artifacts:
+#    when: on_failure
+#    paths:
+#      - report.zip
+#    expire_in: 15 mins
 
     
 # Checking contribution to the main repo
