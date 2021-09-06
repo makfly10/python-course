@@ -28,7 +28,7 @@ inspect:
     - cd /opt/shad/tests
     - chmod -R 777 /opt/shad/tests
     - python3 -m checker grade --inspect
-    - zip --password $REPORT_PASSWORD -e report.zip -- report.txt
+    - zip --password $REPORT_PASSWORD report.zip -- report.txt
   timeout: 15 minutes
   artifacts:
     when: on_failure
