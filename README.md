@@ -589,4 +589,6 @@ $ vim ~/.ipython/profile_default/startup/typecheck.py
 ~/.pyenv/versions/3.9.7/envs/shad_env/bin/jupyter notebook
 ```
 
+Для проверки типов добавить строчку `%%typecheck` в тестируемой ячейке. Для применения `mypy` ко всем запускаемым ячейкам можно использовать [Nb Mypy](https://pypi.org/project/nb-mypy/).
+
 </details>
