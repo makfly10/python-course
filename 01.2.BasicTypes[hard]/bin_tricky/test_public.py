@@ -69,6 +69,7 @@ TEST_CASES = [
     Case(nums1=[1], nums2=[3, 4, 5]),
     Case(nums1=[3, 4, 5, 6, 7, 8], nums2=[1, 2]),
     Case(nums1=[1, 1, 2, 5, 6], nums2=[1, 9, 10]),
+    Case(nums1=list(range(0, 100, 2)), nums2=list(range(-100, 100, 5))),
 ]
 
 
