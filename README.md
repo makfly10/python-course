@@ -416,7 +416,6 @@ cd "/mnt/c/Users/<username>/My Documents"
 <details><summary><a>Linux/Windows</a></summary>
 
 ```bash
-$ cd <путь к директории с задачами>
 $ source shad_env/bin/activate   # активируем виртуальное окружение, если не активировано
 (shad_env)$ pytest 01.1.PythonTools/hello_world/  # запуск тестов
 (shad_env)$ flake8 01.1.PythonTools/hello_world/  # запуск линтера и stylecheck'а
@@ -429,7 +428,6 @@ NB: Заметьте, что запуск происходит из **корня
 <details><summary><a>MacOS</a></summary>
 
 ```bash
-> cd <путь к директории с задачами>
 > ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pytest 01.1.PythonTools/hello_world/  # запуск тестов
 > ~/.pyenv/versions/3.9.7/envs/shad_env/bin/flake8 01.1.PythonTools/hello_world/  # запуск линтера и stylecheck'а
 > ~/.pyenv/versions/3.9.7/envs/shad_env/bin/mypy 01.1.PythonTools/hello_world/    # запуск typecheck'а
