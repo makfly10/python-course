@@ -400,7 +400,7 @@ cd "/mnt/c/Users/<username>/My Documents"
 Для получения новых заданий надо выполнить `git pull upstream master`.
 
 ### Решаем задачу
-Код относящийся к отдельной задаче находится в отдельной директории (`hello_world` и т.д.), нас будет интересовать её содержимое:
+Код относящийся к отдельной задаче находится в отдельной директории темы и задачи (`01.1.PythonTools/hello_world` и т.д.), нас будет интересовать её содержимое:
 - условие задачи содержится в файле `README.md`
 - заготовка в кодом задачи обычно лежит в файле с именем задачи `hello_world.py`
 - публичные тесты к задаче находятся в файле `test_public.py`
@@ -418,9 +418,9 @@ cd "/mnt/c/Users/<username>/My Documents"
 ```bash
 $ cd <путь к директории с задачами>
 $ source shad_env/bin/activate   # активируем виртуальное окружение, если не активировано
-(shad_env)$ pytest hello_world/  # запуск тестов
-(shad_env)$ flake8 hello_world/  # запуск линтера и stylecheck'а
-(shad_env)$ mypy hello_world/    # запуск typecheck'а
+(shad_env)$ pytest 01.1.PythonTools/hello_world/  # запуск тестов
+(shad_env)$ flake8 01.1.PythonTools/hello_world/  # запуск линтера и stylecheck'а
+(shad_env)$ mypy 01.1.PythonTools/hello_world/    # запуск typecheck'а
 ```
 
 NB: Заметьте, что запуск происходит из **корня проекта**. Если хочется запускать из папки с задачей, то нужно **указать путь** до `setup.cfg` как аргумент для `pytest`/`flake8`/`mypy`. 
@@ -430,9 +430,9 @@ NB: Заметьте, что запуск происходит из **корня
 
 ```bash
 > cd <путь к директории с задачами>
-> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pytest hello_world/  # запуск тестов
-> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/flake8 hello_world/  # запуск линтера и stylecheck'а
-> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/mypy hello_world/    # запуск typecheck'а
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/pytest 01.1.PythonTools/hello_world/  # запуск тестов
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/flake8 01.1.PythonTools/hello_world/  # запуск линтера и stylecheck'а
+> ~/.pyenv/versions/3.9.7/envs/shad_env/bin/mypy 01.1.PythonTools/hello_world/    # запуск typecheck'а
 ```
 
 NB: Заметьте, что запуск происходит из **корня проекта**. Если хочется запускать из папки с задачей, то нужно **указать путь** до `setup.cfg` как аргумент для `pytest`/`flake8`/`mypy`. 
@@ -464,7 +464,7 @@ NB: В PyCharm можно настроить автоматический зап
 
 ### Отправляем задачу в тестирующую систему
 ```bash
-git add hello_world/hello_world.py
+git add 01.1.PythonTools/hello_world/hello_world.py
 git commit -m 'Add hello world task'
 git push origin master
 ```
