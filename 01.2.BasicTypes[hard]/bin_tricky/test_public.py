@@ -40,19 +40,19 @@ TEST_CASES = [
     Case(nums1=[1, 2, 3], nums2=[]),
     Case(nums1=[1, 2, 3, 5], nums2=[]),
     Case(nums1=[1, 2, 3, 5, 7], nums2=[]),
-    Case(nums1=[], nums2=[1, 2]),
-    Case(nums1=[], nums2=[1, 2, 3]),
-    Case(nums1=[], nums2=[1, 2, 3, 5]),
-    Case(nums1=[], nums2=[1, 2, 3, 5, 7]),
-    Case(nums1=[], nums2=[1, 2, 3, 5, 7]),
     Case(nums1=[-1, -1, -1], nums2=[-1, -1, -1]),
     Case(nums1=[1, 2],  nums2=[1, 2]),
     Case(nums1=[1, 1], nums2=[1, 1]),
     Case(nums1=[1, 3], nums2=[2]),
     Case(nums1=[2], nums2=[1, 3, 4]),
     Case(nums1=[3], nums2=[1, 2, 4]),
-    Case(nums1=[1, 2, 4], nums2=[3]),
-    Case(nums1=[1, 3, 4], nums2=[2]),
+    Case(nums1=[2, 6], nums2=[3, 4]),
+    Case(nums1=[1, 2, 2, 2, 3, 4, 5], nums2=[1, 2, 6, 7, 8, 8, 9]),
+    Case(nums1=[1, 2, 2, 2, 3, 4, 5], nums2=[1, 2, 6]),
+    Case(nums1=[1, 2, 2, 2, 2, 2, 5], nums2=[1, 2, 6]),
+    Case(nums1=[1, 2, 3, 4, 5], nums2=[1, 2, 3]),
+    Case(nums1=[2, 2, 2, 2, 2, 2, 2, 2], nums2=[2, 2, 2]),
+    Case(nums1=[2, 2, 2, 2, 2, 2, 2, 2], nums2=[2, 2, 2, 2]),
     Case(nums1=[1, 2, 3, 4], nums2=[3, 4, 5, 6]),
     Case(nums1=[1, 2, 3, 4], nums2=[1, 2, 3, 4]),
     Case(nums1=[1, 3, 5, 7], nums2=[2, 4, 6, 8]),
@@ -64,9 +64,7 @@ TEST_CASES = [
     Case(nums1=[1, 2], nums2=[3]),
     Case(nums1=[1], nums2=[2, 3]),
     Case(nums1=[1, 2], nums2=[3, 4]),
-    Case(nums1=[3, 4], nums2=[1, 2]),
     Case(nums1=[3, 4, 5], nums2=[1]),
-    Case(nums1=[1], nums2=[3, 4, 5]),
     Case(nums1=[3, 4, 5, 6, 7, 8], nums2=[1, 2]),
     Case(nums1=[1, 1, 2, 5, 6], nums2=[1, 9, 10]),
     Case(nums1=list(range(0, 100, 2)), nums2=list(range(-100, 100, 5))),
@@ -149,6 +147,10 @@ def test_find_value(t: Case) -> None:
     assert not is_used_sorted, "You should use iteration ONLY, not manually sorting"
 
     assert answer == dummy_implementation(t.nums1, t.nums2)
+
+    swapped_args_answer = find_median(nums2_copy, nums1_copy)
+    assert swapped_args_answer == dummy_implementation(t.nums2, t.nums1), \
+        "You should get the same result if you swap the arguments"
 
 
 def test_doc() -> None:
