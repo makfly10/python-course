@@ -3,6 +3,7 @@ import dataclasses
 import itertools
 import random
 import string
+import sys
 
 import pytest
 
@@ -62,6 +63,13 @@ def _generate_words(n: int) -> set[str]:
         words.add("".join(random.choices(string.ascii_letters, k=word_len)))
 
     return words
+
+
+def test_banned_modules() -> None:
+    banned_modules = ['graphlib']
+
+    for module_name in banned_modules:
+        assert module_name not in sys.modules, f'You have imported the {module_name} module'
 
 
 def test_random_stress() -> None:
