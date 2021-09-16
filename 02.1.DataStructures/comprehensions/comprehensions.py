@@ -1,18 +1,7 @@
 import typing as tp
-from typing_extensions import TypedDict
 
 
-TRecord = TypedDict('TRecord', {
-    'EventID': int,
-    'EventTime': int,
-    'UserID': int,
-    'PageID': int,
-    'RegionID': tp.Optional[int],
-    'DeviceType': str,
-})
-
-
-def get_unique_page_ids(records: list[TRecord]) -> set[int]:
+def get_unique_page_ids(records: list[tp.Mapping[str, tp.Any]]) -> set[int]:
     """
     Get unique web pages visited
     :param records: records of hit-log
@@ -20,7 +9,7 @@ def get_unique_page_ids(records: list[TRecord]) -> set[int]:
     """
 
 
-def get_unique_page_ids_visited_after_ts(records: list[TRecord], ts: int) -> set[int]:
+def get_unique_page_ids_visited_after_ts(records: list[tp.Mapping[str, tp.Any]], ts: int) -> set[int]:
     """
     Get unique web pages visited after some timestamp (not included)
     :param records: records of hit-log
@@ -30,7 +19,7 @@ def get_unique_page_ids_visited_after_ts(records: list[TRecord], ts: int) -> set
 
 
 def get_unique_user_ids_visited_page_after_ts(
-        records: list[TRecord],
+        records: list[tp.Mapping[str, tp.Any]],
         ts: int,
         page_id: int
         ) -> set[int]:
@@ -44,9 +33,9 @@ def get_unique_user_ids_visited_page_after_ts(
 
 
 def get_events_by_device_type(
-        records: list[TRecord],
+        records: list[tp.Mapping[str, tp.Any]],
         device_type: str
-        ) -> list[TRecord]:
+        ) -> list[tp.Mapping[str, tp.Any]]:
     """
     Filter events for given device type with order preservation
     :param records: records of hit-log
@@ -59,7 +48,7 @@ DEFAULT_REGION_ID = 100500
 
 
 def get_region_ids_with_none_replaces_by_default(
-        records: list[TRecord]
+        records: list[tp.Mapping[str, tp.Any]]
         ) -> list[int]:
     """
     Extract visited regions with order preservation. If region not defined, replace it by default region id
@@ -69,7 +58,7 @@ def get_region_ids_with_none_replaces_by_default(
 
 
 def get_region_id_if_not_none(
-        records: list[TRecord]
+        records: list[tp.Mapping[str, tp.Any]]
         ) -> list[int]:
     """
     Extract visited regions if they are defined with order preservation
@@ -78,7 +67,7 @@ def get_region_id_if_not_none(
     """
 
 
-def get_keys_where_value_is_not_none(r: TRecord) -> list[str]:
+def get_keys_where_value_is_not_none(r: tp.Mapping[str, tp.Any]) -> list[str]:
     """
     Extract keys where values are defined
     :param r: record of hit-log
@@ -87,7 +76,7 @@ def get_keys_where_value_is_not_none(r: TRecord) -> list[str]:
 
 
 def get_record_with_none_if_key_not_in_keys(
-        r: TRecord,
+        r: tp.Mapping[str, tp.Any],
         keys: set[str]
         ) -> dict[str, tp.Any]:
     """
@@ -99,7 +88,7 @@ def get_record_with_none_if_key_not_in_keys(
 
 
 def get_record_with_key_in_keys(
-        r: TRecord,
+        r: tp.Mapping[str, tp.Any],
         keys: set[str]
         ) -> dict[str, tp.Any]:
     """
@@ -111,7 +100,7 @@ def get_record_with_key_in_keys(
 
 
 def get_keys_if_key_in_keys(
-        r: TRecord,
+        r: tp.Mapping[str, tp.Any],
         keys: set[str]
         ) -> set[str]:
     """

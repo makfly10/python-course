@@ -6,19 +6,6 @@ import typing as tp
 
 from . import comprehensions as comp
 
-try:
-    from .comprehensions import TRecord
-except ImportError:
-    from typing_extensions import TypedDict
-    TRecord = TypedDict('TRecord', {  # type: ignore
-        'EventID': int,
-        'EventTime': int,
-        'UserID': int,
-        'PageID': int,
-        'RegionID': tp.Optional[int],
-        'DeviceType': str,
-    })
-
 
 ###################
 # Structure asserts
@@ -97,7 +84,7 @@ def assert_comprehension_structure(func: tp.Callable[..., tp.Any], comprehension
 ###################
 
 
-TEST_RECORDS: list[TRecord] = [
+TEST_RECORDS: list[tp.Mapping[str, tp.Any]] = [
     {"EventID": 12345, "EventTime": 1568839214, "UserID": 12456,
      "PageID": 10, "RegionID": None, "DeviceType": "Safari"},
     {"EventID": 12346, "EventTime": 1568839215, "UserID": 12456, "PageID": 10, "RegionID": None,
@@ -113,7 +100,7 @@ TEST_RECORDS: list[TRecord] = [
 ]
 
 
-TEST_RECORD: TRecord = TEST_RECORDS[0]
+TEST_RECORD: tp.Mapping[str, tp.Any] = TEST_RECORDS[0]
 
 
 def test_get_unique_page_ids() -> None:
