@@ -132,6 +132,14 @@ def dummy_implementation(nums1: list[int], nums2: list[int]) -> float:
     return (combined_nums[(m + n) // 2] + combined_nums[(m + n - 1) // 2]) / 2
 
 
+def test_illegal_staff() -> None:
+    is_used_sorted = any(i.argval == 'sorted' for i in get_instructions(find_median))
+    assert not is_used_sorted, "You should use iteration ONLY, not manually sorting"
+
+    is_used_in = any(getattr(instr, 'opname') == 'CONTAINS_OP' for instr in get_instructions(find_median))
+    assert not is_used_in, "You, don't even dare to use `in`! It's plainly illegal, you got that?!"
+
+
 @pytest.mark.parametrize('t', TEST_CASES, ids=str)
 def test_find_value(t: Case) -> None:
     nums1_copy = copy.deepcopy(t.nums1)
@@ -139,18 +147,15 @@ def test_find_value(t: Case) -> None:
 
     answer = find_median(nums1_copy, nums2_copy)
 
-    assert t.nums1 == nums1_copy, "You shouldn't change inputs"
-    assert t.nums2 == nums2_copy, "You shouldn't change inputs"
+    assert t.nums1 == nums1_copy and t.nums2 == nums2_copy, "You shouldn't change inputs"
     assert type(answer) == float, "You shouldn't return different types from the same function"
 
-    is_used_sorted = any(i.argval == 'sorted' for i in get_instructions(find_median))
-    assert not is_used_sorted, "You should use iteration ONLY, not manually sorting"
+    ground_truth = dummy_implementation(t.nums1, t.nums2)
 
-    assert answer == dummy_implementation(t.nums1, t.nums2)
+    assert answer == ground_truth
 
     swapped_args_answer = find_median(nums2_copy, nums1_copy)
-    assert swapped_args_answer == dummy_implementation(t.nums2, t.nums1), \
-        "You should get the same result if you swap the arguments"
+    assert swapped_args_answer == ground_truth, "You should get the same result if you swap the arguments"
 
 
 def test_doc() -> None:

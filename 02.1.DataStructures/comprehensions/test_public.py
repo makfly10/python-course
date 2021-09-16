@@ -84,7 +84,7 @@ def assert_comprehension_structure(func: tp.Callable[..., tp.Any], comprehension
 ###################
 
 
-TEST_RECORDS: list[tp.Mapping[str, tp.Any]] = [
+TEST_RECORDS: list[comp.TRecord] = [
     {"EventID": 12345, "EventTime": 1568839214, "UserID": 12456,
      "PageID": 10, "RegionID": None, "DeviceType": "Safari"},
     {"EventID": 12346, "EventTime": 1568839215, "UserID": 12456, "PageID": 10, "RegionID": None,
@@ -96,11 +96,11 @@ TEST_RECORDS: list[tp.Mapping[str, tp.Any]] = [
     {"EventID": 12345, "EventTime": 1568839218, "UserID": 12395, "PageID": 221, "RegionID": 0,
      "DeviceType": "Firefox"},
     {"EventID": 15789, "EventTime": 1568839219, "UserID": 12399, "PageID": 221, "RegionID": 20,
-     "DeviceType": "Internet Explorer"}
+     "DeviceType": "Internet Explorer"},
 ]
 
 
-TEST_RECORD: tp.Mapping[str, tp.Any] = TEST_RECORDS[0]
+TEST_RECORD: comp.TRecord = TEST_RECORDS[0]
 
 
 def test_get_unique_page_ids() -> None:
