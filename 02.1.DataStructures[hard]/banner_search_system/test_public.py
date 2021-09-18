@@ -194,9 +194,11 @@ class QueryCase:
 
 
 QUERIES_TEST_CASE = [
+    QueryCase(query="600р итд", banners_indices=[]),
     QueryCase(query="Купить Москва холодильник", banners_indices=[]),
     QueryCase(query="Купить холодильник владикавказ", banners_indices=[]),
     QueryCase(query="Купить холодильник", banners_indices=[12]),
+    QueryCase(query="Холодильник купить холодильник", banners_indices=[12]),
     QueryCase(query="Из москва холодильник", banners_indices=[10, 14, 17]),
     QueryCase(query="Ремонт итд холодильник", banners_indices=[14, 15, 16, 17]),
     QueryCase(query="Джинсы со скидка 600р", banners_indices=[18, 20, 21]),
