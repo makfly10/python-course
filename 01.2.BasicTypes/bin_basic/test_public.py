@@ -124,13 +124,17 @@ def assert_use(func: tp.Callable[..., tp.Any], param: str, value: str) -> None:
 # Tests
 ###################
 
+
+def test_banned_functions() -> None:
+    assert_not_use(find_value, "argval", "bisect_left")
+    assert_not_use(find_value, "argval", "bisect_right")
+    assert_not_use(find_value, "argval", "bisect")
+
+
 @pytest.mark.parametrize('t', TEST_CASES, ids=str)
 def test_find_value(t: Case) -> None:
     nums_copy = copy.deepcopy(t.nums)
     answer = find_value(nums_copy, t.value)
-    assert_not_use(find_value, "argval", "bisect_left")
-    assert_not_use(find_value, "argval", "bisect_right")
-    assert_not_use(find_value, "argval", "bisect")
     assert t.nums == nums_copy, "You shouldn't change inputs"
     assert answer == t.result
 
