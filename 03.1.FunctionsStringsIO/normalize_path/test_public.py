@@ -122,5 +122,5 @@ def test_speed(case: LoadCase) -> None:
     solution_time = timeit.timeit(lambda: normalize_path(case.path), number=case.num) / case.num
     normpath_time = timeit.timeit(lambda: normpath(case.path), number=case.num) / case.num
 
-    # add 1.1 multiplayer just to help you to cope with testing system conditions
-    assert solution_time < normpath_time * 1.1, 'You should do this in a more optimal way'
+    # add 1.5 multiplayer just to help you to cope with testing system conditions
+    assert solution_time < normpath_time * 1.5, 'You should do this in a more optimal way'
