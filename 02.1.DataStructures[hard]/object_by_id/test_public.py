@@ -185,8 +185,8 @@ def test_get_tuple_by_id(tuple_values: tuple[tp.Any]) -> None:
 
 
 DEEP_VALUES = [
-    [1, [([34, [45]], [1, (12.3, ["a place for your meme"])])], [(345, 34), (34, 1.2)], [3], (), (".")],
-    ((1, 3), [4, 5, (6,), [7, [8, 9]], 10, (11, 12, [13], 14), 15], 16, 17.5),
+    [1, [([34, [45]], [1, (-12.3, ["a place for your meme"])])], [(345, 34), (34, 1.2)], [3], (), (".")],
+    ((1, 1-3, 3), [4, 5, (6,), [7, [8, 9]], 10, (11, 12, [13], 14), 15], 1600, 17.5),
     [[i, f'v_{i}'*i, (i,)]*i if i % 2 else tuple(f'{j}'*j if j % 4 else j**j for j in range(i+64)) for i in range(64)],
 ]
 
@@ -196,18 +196,7 @@ def test_get_deep_values_by_id(deep_values: tuple[tp.Any]) -> None:
     assert get_object_by_id(id(deep_values)) == deep_values
 
 
-def test_deep_cycle() -> None:
-    cycled_list: list[tp.Any] = [1]
-    cycled_list.append(cycled_list)
-
-    _object = get_object_by_id(id(cycled_list))
-
-    for i in range(100000):
-        _object = _object[1]  # type: ignore
-        assert _object[0] == 1
-
-
-def test_long_cycle() -> None:
+def test_wide_cycle() -> None:
     cycled_list: list[tp.Any] = [0 for _ in range(1024)]
     for i in range(len(cycled_list)):
         cycled_list[i] = cycled_list
@@ -220,3 +209,47 @@ def test_long_cycle() -> None:
         assert isinstance(_object[i], list)
         assert len(_object[i]) == len(cycled_list)
         assert id(_object[i]) == id(_object)
+
+
+def test_same_id_values() -> None:
+    value: str = 'test_same_id_values'
+    list_: tuple[tp.Any, ...] = tuple([value] * 1024)
+
+    _object = get_object_by_id(id(list_))
+    assert isinstance(_object, tuple)
+
+    assert len({id(i) for i in _object}) == 1
+
+
+def test_direct_cycle() -> None:
+    value: str = 'test_direct_cycle'
+    cycled_list: list[tp.Any] = [[value], [value], [value]]
+    cycled_list.append(cycled_list)
+
+    _object = get_object_by_id(id(cycled_list))
+    assert isinstance(_object, list)
+    assert len(_object) == 4
+
+    assert len({id(i) for i in _object}) == 4
+    assert len({id(i[0]) for i in _object[:3]}) == 1
+
+
+def test_indirect_cycle() -> None:
+    cycled_list_first: list[tp.Any] = []
+    cycled_list_second: list[tp.Any] = []
+    cycled_list_third: tuple[tp.Any, ...] = (cycled_list_first, cycled_list_second)
+    cycled_list_first.extend([cycled_list_second, cycled_list_third])
+    cycled_list_second.extend([cycled_list_third, cycled_list_first])
+
+    _object = get_object_by_id(id(cycled_list_first))
+
+    assert isinstance(_object, list) and len(_object) == 2
+    assert isinstance(_object[0], list) and len(_object[0]) == 2
+    assert isinstance(_object[0][0], tuple) and len(_object[0][0]) == 2
+
+    first_id = id(_object)
+    second_id = id(_object[0])
+    third_id = id(_object[0][0])
+    assert [id(i) for i in _object] == [second_id, third_id]
+    assert [id(i) for i in _object[0]] == [third_id, first_id]
+    assert [id(i) for i in _object[0][0]] == [first_id, second_id]
