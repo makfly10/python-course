@@ -3645,6 +3645,34 @@ b |= a
 print(b)
 assert(b == {'a': 1, 'b': 2, 'c': 3})
 """),
+    Case(
+        name="new_typings_setup_annotations",
+        text_code=r"""
+a: list[int] = []
+b: str
+c = __annotations__
+print(sorted(c.items()))
+assert(c == {'a': list[int], 'b': str})
+"""),
+    Case(
+        name="new_typings_features",
+        text_code=r"""
+import types
+assert list[str] == list[str]
+assert not (list[str] == list[int])
+assert isinstance(list[str], types.GenericAlias)
+l: list[str] = ['1', '2', '3']
+t = list[str]('123')
+print(l == t)
+assert isinstance(l, list)
+"""),
+    Case(
+        name="removeprefix_removesuffix",
+        text_code=r"""
+test_func_name = 'test_func_name'
+print(test_func_name.removeprefix("test_"))
+print(test_func_name.removesuffix("_name"))
+"""),
     ]
 
 
