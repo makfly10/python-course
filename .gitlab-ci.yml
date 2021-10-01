@@ -14,6 +14,17 @@ grade:
     - python3 -m checker grade
   timeout: 10 minutes
 
+grade-mr:
+  image: eu.gcr.io/shad-ts/grader/py-testenv
+  tags:
+    - docker-tester-python
+  only:
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME =~ $CI_DEFAULT_BRANCH
+  script:
+    - echo "TODO check mr quality"
+  timeout: 10 minutes
+
 # Inspect
 #inspect:
 #  image: eu.gcr.io/shad-ts/grader/py-testenv
@@ -49,4 +60,8 @@ check:
     - cp -R /opt/shad/tests tests/
     - cd tests/
     - env PYTHONPATH=. python3 -m checker check --contributing
+    - echo "CI_MERGE_REQUEST_PROJECT_ID $CI_MERGE_REQUEST_PROJECT_ID"
+    - echo "CI_MERGE_REQUEST_SOURCE_PROJECT_ID $CI_MERGE_REQUEST_SOURCE_PROJECT_ID"
+    - echo "CI_MERGE_REQUEST_SOURCE_PROJECT_PATH $CI_MERGE_REQUEST_SOURCE_PROJECT_PATH"
+    - echo "CI_MERGE_REQUEST_TARGET_BRANCH_NAME $CI_MERGE_REQUEST_TARGET_BRANCH_NAME"
   timeout: 30 minutes
