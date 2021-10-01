@@ -107,6 +107,8 @@ def test_get_unique_page_ids() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_unique_page_ids(test_records)
 
+    assert_not_use(comp.get_unique_page_ids, 'argval', 'list')
+    assert_not_use(comp.get_unique_page_ids, 'argval', 'set')
     assert_comprehension_structure(comp.get_unique_page_ids, '<setcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -117,6 +119,8 @@ def test_get_unique_page_ids_visited_after_ts() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_unique_page_ids_visited_after_ts(test_records, 1568839216)
 
+    assert_not_use(comp.get_unique_page_ids_visited_after_ts, 'argval', 'list')
+    assert_not_use(comp.get_unique_page_ids_visited_after_ts, 'argval', 'set')
     assert_comprehension_structure(comp.get_unique_page_ids_visited_after_ts, '<setcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -127,6 +131,8 @@ def test_get_unique_user_ids_visited_page_after_ts() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_unique_user_ids_visited_page_after_ts(test_records, 1568839216, 221)
 
+    assert_not_use(comp.get_unique_user_ids_visited_page_after_ts, 'argval', 'list')
+    assert_not_use(comp.get_unique_user_ids_visited_page_after_ts, 'argval', 'set')
     assert_comprehension_structure(comp.get_unique_user_ids_visited_page_after_ts, '<setcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -137,6 +143,8 @@ def test_get_events_by_device_type() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_events_by_device_type(test_records, "Internet Explorer")
 
+    assert_not_use(comp.get_events_by_device_type, 'argval', 'set')
+    assert_not_use(comp.get_events_by_device_type, 'argval', 'list')
     assert_comprehension_structure(comp.get_events_by_device_type, '<listcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -152,6 +160,8 @@ def test_get_region_ids_with_none_replaces_by_default() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_region_ids_with_none_replaces_by_default(test_records)
 
+    assert_not_use(comp.get_region_ids_with_none_replaces_by_default, 'argval', 'set')
+    assert_not_use(comp.get_region_ids_with_none_replaces_by_default, 'argval', 'list')
     assert_comprehension_structure(comp.get_region_ids_with_none_replaces_by_default, '<listcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -162,6 +172,8 @@ def test_get_region_id_if_not_none() -> None:
     test_records = copy.deepcopy(TEST_RECORDS)
     result = comp.get_region_id_if_not_none(test_records)
 
+    assert_not_use(comp.get_region_id_if_not_none, 'argval', 'set')
+    assert_not_use(comp.get_region_id_if_not_none, 'argval', 'list')
     assert_comprehension_structure(comp.get_region_id_if_not_none, '<listcomp>')
 
     assert test_records == TEST_RECORDS, "You shouldn't change inputs"
@@ -172,6 +184,8 @@ def test_get_keys_where_value_is_not_none() -> None:
     test_r = copy.deepcopy(TEST_RECORD)
     result = comp.get_keys_where_value_is_not_none(test_r)
 
+    assert_not_use(comp.get_keys_where_value_is_not_none, 'argval', 'set')
+    assert_not_use(comp.get_keys_where_value_is_not_none, 'argval', 'list')
     assert_comprehension_structure(comp.get_keys_where_value_is_not_none, '<listcomp>')
 
     assert test_r == TEST_RECORD, "You shouldn't change inputs"
@@ -182,6 +196,7 @@ def test_get_record_with_none_if_key_not_in_keys() -> None:
     test_r = copy.deepcopy(TEST_RECORD)
     result = comp.get_record_with_none_if_key_not_in_keys(test_r, {"EventID", "UserID"})
 
+    assert_not_use(comp.get_record_with_none_if_key_not_in_keys, 'argval', 'dict')
     assert_comprehension_structure(comp.get_record_with_none_if_key_not_in_keys, '<dictcomp>')
 
     assert test_r == TEST_RECORD, "You shouldn't change inputs"
@@ -193,6 +208,7 @@ def test_get_record_with_key_in_keys() -> None:
     test_r = copy.deepcopy(TEST_RECORD)
     result = comp.get_record_with_key_in_keys(test_r, {"EventID", "UserID"})
 
+    assert_not_use(comp.get_record_with_key_in_keys, 'argval', 'dict')
     assert_comprehension_structure(comp.get_record_with_key_in_keys, '<dictcomp>')
 
     assert test_r == TEST_RECORD, "You shouldn't change inputs"
@@ -203,6 +219,8 @@ def test_get_keys_if_key_in_keys() -> None:
     test_r = copy.deepcopy(TEST_RECORD)
     result = comp.get_keys_if_key_in_keys(test_r, {"EventID", "UserID", "SomeField"})
 
+    assert_not_use(comp.get_keys_if_key_in_keys, 'argval', 'list')
+    assert_not_use(comp.get_keys_if_key_in_keys, 'argval', 'set')
     assert_comprehension_structure(comp.get_keys_if_key_in_keys, '<setcomp>')
 
     assert test_r == TEST_RECORD, "You shouldn't change inputs"

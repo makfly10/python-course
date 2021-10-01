@@ -83,14 +83,21 @@ TEST_CASES = [
     Case(a=[1, 2, 1], result=1),
     Case(a=[1, 1], result=0),
     Case(a=[1], result=0),
+    Case(a=[2*30, 2*30], result=0),
     Case(a=["a"], result=0),
     Case(a=["a", "a"], result=0),
     Case(a=["a", "a", "b", "c"], result=2),
     Case(a=[1, 2, 3, 4], result=3),
+    Case(a=[2, 3, 4, 1], result=3),
     Case(a=[1, 2, 3, 4, 5, 6, 1], result=5),
     Case(a=[1, 1, 1, 1, 2, 2, 1], result=2),
+    Case(a=[1, 1, 1, 2, 2, 2, 2], result=3),
+    Case(a=[2, 2, 2, 2, 1, 1, 1], result=3),
+    Case(a=[1, 1, 2, 2, 3, 3], result=4),
     Case(a=[1, 1, 1, 2, 3, 3, 1], result=3),
     Case(a=[-1, 1, 1, -1, 3, 3, -1], result=4),
+    Case(a=[-1, 1] * 1024, result=1024),
+    Case(a=list(range(1024)), result=1024-1),
 ]
 
 
