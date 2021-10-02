@@ -111,7 +111,14 @@ TEST_CASES = [
               '            \n'
               '     \n',
          flags='-L', result={'longest_line': 12}, dedent=False),
-    Case(text='', flags='', result={'chars': 0, 'lines': 0, 'words': 0, 'longest_line': 0})
+    Case(text='', flags='',
+         result={'chars': 0, 'lines': 0, 'words': 0, 'longest_line': 0}),
+    Case(text='abc\ndefg', flags='',
+         result={'chars': 8, 'lines': 1, 'words': 2, 'longest_line': 4}),
+    Case(text='abc\ndefg\n', flags='',
+         result={'chars': 9, 'lines': 2, 'words': 2, 'longest_line': 4}),
+    Case(text='\n\n\n\n', flags='',
+         result={'chars': 4, 'lines': 4, 'words': 0, 'longest_line': 0}),
 ]
 
 

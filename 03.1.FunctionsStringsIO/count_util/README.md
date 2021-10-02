@@ -17,7 +17,7 @@
 
 Число строк на вход может меняться от 0 до 100.
 
-Функция возвращает словарь, где в зависимости от переданных флагов присутствуют следющие ключи (и соотв. значения):
+Функция возвращает словарь, где в зависимости от переданных флагов присутствуют следующие ключи (и соотв. значения):
 * `chars` - кол-во символов;
 * `lines` - кол-во строк;
 * `longest_line` - наибольшая длина строки;
@@ -25,8 +25,8 @@
 
 Естественно, пользоваться консольной утилитой __wc__ в этой задаче запрещено (да и не сильно упростит задачу).
 
-NB: Согласно документации __wc__: _A line is deﬁned as a string of characters delimited by a <newline>
-character. A word is deﬁned as a string of characters delimited by white space characters_.
+NB: Согласно документации __wc__: _A line is defined as a string of characters delimited by a <newline>
+character. A word is defined as a string of characters delimited by white space characters_.
 Т.е. **нужно правильно учесть** последний перенос строки.
 
 ### Пример
