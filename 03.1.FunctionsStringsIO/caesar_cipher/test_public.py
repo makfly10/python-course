@@ -46,6 +46,21 @@ TEST_CASES = [
     Case(message='This is stupid song stupid stupid stupid song',
          n=1000,
          result='Ftue ue efgbup eazs efgbup efgbup efgbup eazs'),
+    Case(message='Veni vidi vici',
+         n=0,
+         result='Veni vidi vici'),
+    Case(message='Veni vidi vici',
+         n=26,
+         result='Veni vidi vici'),
+    Case(message='Veni vidi vici',
+         n=-26,
+         result='Veni vidi vici'),
+    Case(message='Veni vidi vici',
+         n=52,
+         result='Veni vidi vici'),
+    Case(message='Veni vidi vici',
+         n=-52,
+         result='Veni vidi vici'),
 ]
 
 
