@@ -52,7 +52,7 @@ def test_tail(case: Case, tmp_path: Path) -> None:
 
     lines = [line.decode() for line in answer]
 
-    assert case.result == lines
+    assert lines == case.result
 
 
 def test_real_log_file() -> None:
