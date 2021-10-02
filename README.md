@@ -224,7 +224,7 @@ mypy 0.910
 Host gitlab.manytask.org
     IdentityFile ~/.ssh/manytask_ed25519
 ```
-Создать файл можно с помощью редактора `nano`, если он установлен
+Создать файл можно с помощью редактора `nano`, если он установлен:
 ```bash
 > nano ~/.ssh/config
 ```
