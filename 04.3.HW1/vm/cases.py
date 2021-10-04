@@ -1,7 +1,10 @@
+from dataclasses import dataclass
+
+
+@dataclass
 class Case:
-    def __init__(self, name: str, text_code: str):
-        self.name = name
-        self.text_code = text_code
+    name: str
+    text_code: str
 
 
 ###################################

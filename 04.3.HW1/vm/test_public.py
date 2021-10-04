@@ -5,12 +5,12 @@ import pytest
 
 # pls don't use `inspect` and `FunctionType`
 from . import function_type_ban  # noqa
-
-sys.modules['inspect'] = None  # type: ignore # noqa
-
 from . import cases  # noqa
 from . import vm_scorer  # noqa
 from . import vm_runner  # noqa
+
+sys.modules['inspect'] = None  # type: ignore # noqa
+
 from . import vm  # noqa
 
 
@@ -23,12 +23,23 @@ SCORES = [SCORER.score(test) for test in TESTS]
 class Scorer:
     def __init__(self) -> None:
         self._score: float = 0.
+        self._blocking_error: bool = False
 
-    def score(self, score: float) -> None:
+    def add_blocking_error(self) -> None:
+        self._blocking_error = True
+
+    def add_score(self, score: float) -> None:
         self._score += score
 
+    @property
+    def score(self) -> float:
+        if self._blocking_error:
+            return 0.
+        else:
+            return self._score
+
     def __str__(self) -> str:
-        return f'\nFull score is: {self._score}'
+        return f'\nSummary score is: {self.score}'
 
 
 def test_version() -> None:
@@ -39,7 +50,7 @@ def test_version() -> None:
 
 
 @pytest.fixture(scope="module")
-def full_score() -> tp.Generator[Scorer, None, None]:
+def task_scorer() -> tp.Generator[Scorer, None, None]:
     scorer = Scorer()
     yield scorer
     # vm_scorer.dump_tests_stat(sys.stdout, SCORER)
@@ -47,7 +58,7 @@ def full_score() -> tp.Generator[Scorer, None, None]:
 
 
 @pytest.mark.parametrize("test,score", zip(cases.TEST_CASES, SCORES), ids=IDS)
-def test_all_cases(test: cases.Case, score: float, full_score: Scorer) -> None:
+def test_all_cases(test: cases.Case, score: float, task_scorer: Scorer) -> None:
     """
     Compare all test cases with etalon
     :param test: test case to check
@@ -65,8 +76,5 @@ def test_all_cases(test: cases.Case, score: float, full_score: Scorer) -> None:
     else:
         assert vm_exc is None
 
-    # Write to stderr for subsequent parsing
-    sys.stderr.write(f"test result score: {score}\n")
-    sys.stderr.flush()
     # Write score into scorer
-    full_score.score(score)
+    task_scorer.add_score(score)
