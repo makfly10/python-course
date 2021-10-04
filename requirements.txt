@@ -19,7 +19,6 @@ matplotlib==3.4.3
 seaborn==0.11.2
 
 # date and time
-python-dateutil==2.8.2
 tzlocal==3.0
 
 # serializers
