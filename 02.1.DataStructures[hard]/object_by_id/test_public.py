@@ -93,6 +93,8 @@ def test_banned_modules() -> None:
 
 def test_banned_methods() -> None:
     assert_not_use(get_object_by_id, "argval", "cast")
+    assert_not_use(get_object_by_id, "argval", "memmove")
+    assert_not_use(get_object_by_id, "argval", "memset")
     assert_not_use(get_object_by_id, "argval", "py_object")
     assert_not_use(get_object_by_id, "argval", "locals")
     assert_not_use(get_object_by_id, "argval", "globals")
