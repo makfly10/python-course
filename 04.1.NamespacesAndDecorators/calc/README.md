@@ -18,8 +18,6 @@
 $ python calc.py
 >>> 1 + 2
 3
->>> [i**2 for i in range(10)]
-[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 >>> math.cos(math.pi)
 -1.0
 >>> print(123)

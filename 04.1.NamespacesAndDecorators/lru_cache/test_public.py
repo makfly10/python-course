@@ -64,3 +64,29 @@ def test_ackermann(capsys: CaptureFixture[str]) -> None:
 def test_join_lists() -> None:
     result = join(((1, 2, 3), 1, (1, 2, 3, 4, ((1, 2), 2, 3))))
     assert result == (1, 2, 3, 1, 1, 2, 3, 4, 1, 2, 2, 3)
+
+
+def test_max_cache_size() -> None:
+    calls_count = 0
+    cache_size = 8
+
+    @cache(cache_size)
+    def simple_id(i: int) -> int:
+        nonlocal calls_count
+        calls_count += 1
+        return i
+
+    args = tuple(range(cache_size))
+    result = tuple(map(simple_id, args))
+    assert result == args
+    assert calls_count == cache_size
+
+    args = tuple(range(cache_size, cache_size * 2))
+    result = tuple(map(simple_id, args))
+    assert result == args
+    assert calls_count == cache_size * 2
+
+    args = tuple(range(cache_size))
+    result = tuple(map(simple_id, args))
+    assert result == args
+    assert calls_count == cache_size * 3
