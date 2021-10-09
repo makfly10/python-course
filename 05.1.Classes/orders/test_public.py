@@ -1,5 +1,7 @@
 from dataclasses import is_dataclass, FrozenInstanceError, asdict
 from typing import Any
+from pathlib import Path
+import re
 
 import pytest
 
@@ -11,6 +13,15 @@ from .orders import Item, Position, CountedPosition, WeightedPosition, Order
 ])
 def test_class_type(class_type: Any) -> None:
     assert is_dataclass(class_type)
+
+
+def test_no_init_implemented() -> None:
+    solution_file = Path(__file__).parent / 'orders.py'
+    assert solution_file.exists()
+
+    with open(solution_file) as f:
+        for i in f:
+            assert not re.match('.*__init__.*', i), 'You should not use __init__ in dataclasses'
 
 
 def test_item_params_check() -> None:
