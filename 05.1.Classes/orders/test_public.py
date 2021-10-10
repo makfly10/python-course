@@ -69,6 +69,8 @@ def test_position_inheritance(class_type: Any) -> None:
 def test_position_is_abstract() -> None:
     item = Item(item_id=0, title='Spoon', cost=25)
 
+    assert getattr(Position.cost, '__isabstractmethod__', False), '`cost` should be an abstractmethod'
+
     with pytest.raises(TypeError) as e:
         _ = Position(item=item)  # type: ignore
     assert "Can't instantiate abstract class Position with abstract method cost" in str(e.value)
@@ -86,7 +88,7 @@ def test_position_is_abstract() -> None:
 ])
 def test_position_cost(class_: type, input_: dict[str, Any], expected_cost: int) -> None:
     position = class_(**input_)
-    assert 'cost' not in asdict(position)
+    assert 'cost' not in asdict(position), '`cost` should be a property'
     assert position.cost == expected_cost
     assert isinstance(position.cost, float) or isinstance(position.cost, int)
 
