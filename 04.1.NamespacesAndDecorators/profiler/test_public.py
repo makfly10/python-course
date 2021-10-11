@@ -26,7 +26,7 @@ def test_example() -> None:
     delta = datetime.now() - start
 
     assert ackermann.calls == 541
-    assert ackermann.last_time_taken <= delta.total_seconds()
+    assert delta.total_seconds() / 2 <= ackermann.last_time_taken <= delta.total_seconds(), 'Wrong last time taken'
     assert result == 29
 
 
@@ -36,7 +36,7 @@ def test_profiler_one_call() -> None:
     delta = datetime.now() - start
 
     assert ackermann.calls == 541
-    assert ackermann.last_time_taken <= delta.total_seconds()
+    assert delta.total_seconds() / 2 <= ackermann.last_time_taken <= delta.total_seconds(), 'Wrong last time taken'
     assert result == 29
 
 
