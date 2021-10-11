@@ -34,6 +34,10 @@
 ```bash
 $ pytest test_public.py::test_all_cases[simple] -vvv
 ```
+Для тех у кого `zsh`
+```bash
+$ pytest test_public.py::test_all_cases\[simple\] -vvv
+```
 
 ### Как запустить все тесты
 
