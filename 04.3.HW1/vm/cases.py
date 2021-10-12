@@ -2601,7 +2601,7 @@ assert(a == 7.5)
         name="binary_module",
         text_code=r"""
 a = 7
-b = 7 % 2
+b = a % 2
 print(b)
 assert(b == 1)
 """),
