@@ -1,0 +1,35 @@
+from pathlib import Path
+import uuid
+import subprocess
+
+import pytest
+
+
+def _run(command: list[str]) -> tuple[int, str, str]:
+    result = subprocess.run(command, capture_output=True, text=True)
+    return result.returncode, result.stdout, result.stderr
+
+
+class TestCli:
+    @pytest.mark.parametrize("command_name", ['', 'decode', 'encode'])
+    def test_help(self, command_name: str) -> None:
+        if not command_name:
+            command = ['steganography-tool', '--help']
+        else:
+            command = ['steganography-tool', command_name, '--help']
+
+        code, out, err = _run(command)
+        assert code == 0, err
+        assert len(out) > 0
+
+    @pytest.mark.parametrize('message', ['secret-message', 'other-message-123-$#', 'and even with spaces'])
+    def test_encode_decode(self, message: str, tmp_path: Path) -> None:
+        filename = tmp_path / f'{uuid.uuid1()}.png'
+        code, out, err = _run(['steganography-tool', 'encode', filename.as_posix(), message])
+        assert code == 0, err
+
+        assert filename.exists()
+
+        code, out, err = _run(['steganography-tool', 'decode', filename.as_posix()])
+        assert code == 0, err
+        assert out.startswith(message)
