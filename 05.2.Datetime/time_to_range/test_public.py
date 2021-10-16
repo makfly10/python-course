@@ -40,6 +40,7 @@ def test_granularity_enum(gtd: time_to_range.GranularityEnum, dt: datetime, expe
     (time_to_range.GranularityEnum.DAY, datetime(2020, 9, 30, 11, 23), datetime(2020, 9, 30, 0, 0)),
     (time_to_range.GranularityEnum.DAY, datetime(2020, 9, 30, 0, 0), datetime(2020, 9, 30, 0, 0)),
     (time_to_range.GranularityEnum.DAY, datetime(2019, 12, 31, 23, 59), datetime(2019, 12, 31, 0, 0)),
+    (time_to_range.GranularityEnum.HOUR, datetime(2020, 9, 30, 0, 0, 1), datetime(2020, 9, 30, 0, 0)),
 ])
 def test_truncate_to_granularity(gtd: time_to_range.GranularityEnum, dt: datetime, truncated_dt: timedelta) -> None:
     assert time_to_range.truncate_to_granularity(dt, gtd) == truncated_dt
@@ -85,6 +86,9 @@ TEST_CASES = [
          dt=datetime(2020, 9, 30, 10, 59, 59),
          expected=[datetime(2020, 9, 29, 22), datetime(2020, 9, 29, 23),
                    datetime(2020, 9, 30, 0), datetime(2020, 9, 30, 1)]),
+    Case(before=1, after=1, shift=-1, gtd=time_to_range.GranularityEnum.HOUR,
+         dt=datetime(2020, 9, 30, 23, 18, 24, 1),
+         expected=[datetime(2020, 9, 30, 21, 0, 0), datetime(2020, 9, 30, 22, 0, 0), datetime(2020, 9, 30, 23, 0, 0)]),
 ]
 
 
@@ -118,6 +122,11 @@ INTERVAL_TEST_CASES = [
         start_dt=datetime(2020, 9, 30, 12, 0, 0), end_dt=datetime(2020, 10, 1, 12, 0),
         gtd=time_to_range.GranularityEnum.TWELVE_HOURS,
         expected=[datetime(2020, 9, 30, 12), datetime(2020, 10, 1, 0), datetime(2020, 10, 1, 12)]
+    ),
+    IntervalCase(
+        start_dt=datetime(2020, 9, 30, 12, 0, 0, 1), end_dt=datetime(2020, 10, 1, 12, 0),
+        gtd=time_to_range.GranularityEnum.TWELVE_HOURS,
+        expected=[datetime(2020, 10, 1, 0), datetime(2020, 10, 1, 12)]
     ),
     IntervalCase(
         start_dt=datetime(2020, 9, 30, 18, 10, 8),  end_dt=datetime(2020, 10, 1, 12, 0),
