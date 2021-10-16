@@ -49,7 +49,8 @@ def test_now(tz: str) -> None:
 @pytest.mark.parametrize("dt_str, fmt, expected_dt", [
     ("2020-10-01T11:00:00", "%Y-%m-%dT%H:%M:%S", datetime(2020, 10, 1, 11, 0, 0)),
     ("2020-10-01T11:00:00 +0300", "%Y-%m-%dT%H:%M:%S %z", datetime(2020, 10, 1, 11, 0, 0)),
-    ("2020-10-01T11:00:00 +0000", "%Y-%m-%dT%H:%M:%S %z", datetime(2020, 10, 1, 14, 0, 0))
+    ("2020-10-01T11:00:00 +0000", "%Y-%m-%dT%H:%M:%S %z", datetime(2020, 10, 1, 14, 0, 0)),
+    ("2020-10-01T11:00:00.123456", "%Y-%m-%dT%H:%M:%S.%f", datetime(2020, 10, 1, 11, 0, 0, 123456))
 ])
 def test_strptime(tz: str, dt_str: str, fmt: str, expected_dt: datetime) -> None:
     with _local_timezone_manager(tz):
@@ -67,7 +68,8 @@ def test_strptime(tz: str, dt_str: str, fmt: str, expected_dt: datetime) -> None
         "%Y-%m-%dT%H:%M:%S %z", "2020-10-01T14:00:00 +0300"),
     (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")),
         "%Y-%m-%dT%H:%M:%S %z", "2020-10-01T15:00:00 +0300"),
-    (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), "%Y-%m-%dT%H:%M:%S", "2020-10-01T15:00:00")
+    (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), "%Y-%m-%dT%H:%M:%S", "2020-10-01T15:00:00"),
+    (datetime(2020, 10, 1, 14, 0, 0, 123456), "%Y-%m-%dT%H:%M:%S.%f %z", "2020-10-01T14:00:00.123456 +0300"),
 ])
 def test_strftime(tz: str, dt: datetime, fmt: str, expected_dt_str: str) -> None:
     """Return dt in Moscow timezone"""
@@ -87,7 +89,10 @@ def test_strftime(tz: str, dt: datetime, fmt: str, expected_dt_str: str) -> None
     (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Moscow")),
         datetime(2020, 10, 1, 16, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), 60 * 60 * 3),
     (datetime(2020, 10, 1, 14, 0, 0), datetime(2020, 10, 1, 16, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), 60 * 60 * 3),
-    (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), datetime(2020, 10, 1, 16, 0, 0), 60 * 60 * 1)
+    (datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Berlin")), datetime(2020, 10, 1, 16, 0, 0), 60 * 60 * 1),
+    (datetime(2020, 10, 1, 14, 0, 0, 123456), datetime(2020, 10, 1, 16, 0, 0, 999999), 60 * 60 * 2),
+    (datetime(2020, 10, 1, 14, 0, 0, 999999), datetime(2020, 10, 1, 16, 0, 0, 123456), 60 * 60 * 2 - 1),
+    (datetime(2020, 10, 1, 16, 0, 0), datetime(2020, 10, 1, 14, 0, 0), -60 * 60 * 2)
 ])
 def test_diff_dt(tz: str, start_dt: datetime, end_dt: datetime, expected_seconds: int) -> None:
     with _local_timezone_manager(tz):
@@ -102,6 +107,8 @@ def test_diff_dt(tz: str, start_dt: datetime, end_dt: datetime, expected_seconds
     (datetime(1970, 1, 1, 0, 0, 0), -3 * 60 * 60),
     (datetime(1970, 1, 1, 0, 0, 0, tzinfo=ZoneInfo("Europe/Moscow")), -3 * 60 * 60),
     (datetime(1970, 1, 1, 0, 0, 0, tzinfo=ZoneInfo("UTC")), 0),
+    (datetime(2020, 10, 1, 14, 0, 0, 123456), 1601550000),
+    (datetime(2020, 10, 1, 14, 0, 0, 999999), 1601550000),
 ])
 def test_timestamp(tz: str, dt: datetime, expected_ts: int) -> None:
     with _local_timezone_manager(tz):
@@ -112,6 +119,7 @@ def test_timestamp(tz: str, dt: datetime, expected_ts: int) -> None:
 @pytest.mark.parametrize("ts, expected_dt", [
     (1601550000, datetime(2020, 10, 1, 14, 0, 0, tzinfo=ZoneInfo("Europe/Moscow"))),
     (0, datetime(1970, 1, 1, 3, 0, 0, tzinfo=ZoneInfo("Europe/Moscow"))),
+    (0.123456, datetime(1970, 1, 1, 3, 0, 0, 123456, tzinfo=ZoneInfo("Europe/Moscow"))),
 ])
 def test_from_timestamp(tz: str, ts: int, expected_dt: datetime) -> None:
     with _local_timezone_manager(tz):
