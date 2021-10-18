@@ -34,7 +34,9 @@ def _local_timezone_manager(tz_name: tp.Optional[str]) -> tp.Generator[None, Non
                 os.environ["TZ"] = current_tz
 
 
-LOCAL_TIMEZONES = [None, "Europe/Madrid", "Europe/Kiev", "Europe/Moscow", "Europe/Berlin", "UTC", "Asia/Singapore"]
+LOCAL_TIMEZONES = [
+    None, "Europe/Madrid", "Europe/Kiev", "Europe/Moscow", "Europe/Berlin", "UTC", "Asia/Singapore", "Australia/Eucla"
+]
 
 
 @pytest.mark.parametrize("tz", LOCAL_TIMEZONES)
