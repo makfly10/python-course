@@ -1,10 +1,10 @@
 import pytest
 from _pytest.capture import CaptureFixture  # typing
 
-from .pyos import Task, Scheduler, GetTid, NewTask, KillTask, WaitTask, Corotine
+from .pyos import Task, Scheduler, GetTid, NewTask, KillTask, WaitTask, Coroutine
 
 
-def task1() -> Corotine:
+def task1() -> Coroutine:
     print('start')
     yield None  # SystemCall is omitted, but stupid mypy still wants explicit None
     print('next')
@@ -18,13 +18,13 @@ def test_single_task_running(capsys: CaptureFixture[str]) -> None:
     assert stdout.strip() == 'start'
 
 
-def infinite_ping() -> Corotine:
+def infinite_ping() -> Coroutine:
     while True:
         print('ping!')
         yield None
 
 
-def infinite_pong() -> Corotine:
+def infinite_pong() -> Coroutine:
     while True:
         print('pong!')
         yield None
@@ -59,7 +59,7 @@ def test_schedule_for_zero_ticks(capsys: CaptureFixture[str]) -> None:
     assert stdout == ''
 
 
-def finite_counter() -> Corotine:
+def finite_counter() -> Coroutine:
     for i in range(5):
         print(i)
         yield None
@@ -76,7 +76,7 @@ def test_schedule_single_finite_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def finite_constant() -> Corotine:
+def finite_constant() -> Coroutine:
     for _ in range(3):
         print(42)
         yield None
@@ -94,10 +94,10 @@ def test_schedule_finite_tasks(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def finite_greedy_task(message: str) -> Corotine:
+def finite_greedy_task(message: str) -> Coroutine:
     for _ in range(3):
         print(message)
-    yield None  # task without yield is not a corotine
+    yield None  # task without yield is not a coroutine
 
 
 def test_schedule_non_cooperative_tasks(capsys: CaptureFixture[str]) -> None:
@@ -114,14 +114,14 @@ def test_schedule_non_cooperative_tasks(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def ping_with_tid() -> Corotine:
+def ping_with_tid() -> Coroutine:
     tid = yield GetTid()
     for i in range(5):
         print('ping from', tid)
         yield None
 
 
-def pong_with_tid() -> Corotine:
+def pong_with_tid() -> Coroutine:
     tid = yield GetTid()
     for i in range(3):
         print('pong from', tid)
@@ -149,7 +149,7 @@ def test_schedule_tasks_with_tid(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def spawner() -> Corotine:
+def spawner() -> Coroutine:
     print('spawn new task')
     yield NewTask(finite_counter())
     for _ in range(5):
@@ -180,7 +180,7 @@ def test_schedule_spawner_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def spawner_killer(target: Corotine) -> Corotine:
+def spawner_killer(target: Coroutine) -> Coroutine:
     print('spawn new task')
     child = yield NewTask(target)
     for _ in range(2):
@@ -213,7 +213,7 @@ def test_schedule_killer_task(capsys: CaptureFixture[str]) -> None:
         next(pinger)
 
 
-def self_killer() -> Corotine:
+def self_killer() -> Coroutine:
     print('starting...')
     tid = yield GetTid()
     print('stopping...')
@@ -232,7 +232,7 @@ def test_schedule_self_killer_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def bad_killer_task() -> Corotine:
+def bad_killer_task() -> Coroutine:
     print('killing...')
     result = yield KillTask(42)
     if result:
@@ -255,7 +255,7 @@ def test_schedule_bad_killer_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def waiter_task() -> Corotine:
+def waiter_task() -> Coroutine:
     print('spawn new task')
     child = yield NewTask(finite_counter())
     print('waiting...')
@@ -283,7 +283,7 @@ def test_schedule_waiter_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def killer_task(tid: int) -> Corotine:
+def killer_task(tid: int) -> Coroutine:
     for i in range(3):
         print(f'tick {i}')
         yield None
@@ -291,7 +291,7 @@ def killer_task(tid: int) -> Corotine:
     yield KillTask(tid)
 
 
-def spawn_and_wait_self_killer() -> Corotine:
+def spawn_and_wait_self_killer() -> Coroutine:
     print('starting')
     tid = yield GetTid()
     print('spawn new task')
@@ -321,7 +321,7 @@ def test_schedule_kill_waiter_task(capsys: CaptureFixture[str]) -> None:
     assert sched.empty()
 
 
-def bad_waiter_task() -> Corotine:
+def bad_waiter_task() -> Coroutine:
     print('waiting...')
     result = yield WaitTask(42)
     if result:

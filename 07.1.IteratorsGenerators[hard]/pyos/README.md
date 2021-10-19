@@ -125,8 +125,8 @@ def handle(self, scheduler: 'Scheduler', task: 'Task') -> bool:
 ```python
 def step(self) -> Optional[SystemCall]:
     """
-    Performs one step of corotine, i.e. sends result of last system call
-    to corotine (generator), gets yielded value and returns it.
+    Performs one step of coroutine, i.e. sends result of last system call
+    to coroutine (generator), gets yielded value and returns it.
     """
 ```
 
@@ -140,9 +140,9 @@ def step(self) -> Optional[SystemCall]:
 `new` создает и возвращает id созданной задачи:
 
 ```python
-def new(self, target: Corotine) -> int:
+def new(self, target: Coroutine) -> int:
     """Create and schedule new task
-    :param target: corotine to wrap in task
+    :param target: coroutine to wrap in task
     :return: id of newly created task
     """
 ```

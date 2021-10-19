@@ -15,15 +15,15 @@ class SystemCall(ABC):
         """
 
 
-Corotine = Generator[Optional[SystemCall], Any, None]
+Coroutine = Generator[Optional[SystemCall], Any, None]
 
 
 class Task:
-    def __init__(self, task_id: int, target: Corotine) -> None:
+    def __init__(self, task_id: int, target: Coroutine) -> None:
         """
         :param task_id: id of the task
-        :param target: corotine to run. Corotine can produce system calls.
-        System calls are being executed by scheduler and the result sends back to corotine.
+        :param target: coroutine to run. Coroutine can produce system calls.
+        System calls are being executed by scheduler and the result sends back to coroutine.
         """
 
     def set_syscall_result(self, result: Any) -> None:
@@ -33,8 +33,8 @@ class Task:
 
     def step(self) -> Optional[SystemCall]:
         """
-        Performs one step of corotine, i.e. sends result of last system call
-        to corotine (generator), gets yielded value and returns it.
+        Performs one step of coroutine, i.e. sends result of last system call
+        to coroutine (generator), gets yielded value and returns it.
         """
 
 
@@ -52,9 +52,9 @@ class Scheduler:
         :param task: task to schedule for execution
         """
 
-    def new(self, target: Corotine) -> int:
+    def new(self, target: Coroutine) -> int:
         """Create and schedule new task
-        :param target: corotine to wrap in task
+        :param target: coroutine to wrap in task
         :return: id of newly created task
         """
 
@@ -91,9 +91,9 @@ class GetTid(SystemCall):
 
 
 class NewTask(SystemCall):
-    """System call to create new task from target corotine"""
+    """System call to create new task from target coroutine"""
 
-    def __init__(self, target: Corotine) -> None:
+    def __init__(self, target: Coroutine) -> None:
         self.target = target
 
     def handle(self, scheduler: Scheduler, task: Task) -> bool:
