@@ -15,9 +15,9 @@
 ### Некоторые моменты 
 
 * Весь код в папке будет установлен в тестирующую систему через `pip install`
-* Структурировать модули можно разными способами. Но в этом задании мы будет требовать публичный интерфейс определённого вида (см тесты)
+* Структурировать модули можно разными способами. Но в этом задании мы будем требовать публичный интерфейс определённого вида (см тесты)
 * Из [документации python](https://packaging.python.org/tutorials/packaging-projects/#configuring-metadata): `Static metadata (setup.cfg) should be preferred.`
-* В этом модуле используется библиотечка `cryptography`. Eё **нет** в тестирующей ситеме, но можно прописать её в requires к модулю 
+* В этом модуле используется библиотечка `cryptography`. Её **нет** в тестирующей системе, но можно прописать её в requires к модулю 
 * Это УЧЕБНЫЙ проект. НЕ стоит использовать какие-либо его части для реальной работы с паролями - это НЕ безопасно
 * Тесты без установки, скорее всего, не запустятся 
 
@@ -43,6 +43,6 @@ $ ~/.pyenv/versions/shad_env/bin/pytest 06.1.ModulesPackagesImport/basic_module
 
 
 ## Полезные материалы 
-* https://packaging.python.org/tutorials/packaging-projects/
-* https://docs.python.org/3/tutorial/modules.html
-* https://bitwarden.com/
+* [https://packaging.python.org/tutorials/packaging-projects/](https://packaging.python.org/tutorials/packaging-projects/)
+* [https://docs.python.org/3/tutorial/modules.html](https://docs.python.org/3/tutorial/modules.html)
+* [https://bitwarden.com/](https://bitwarden.com/)
