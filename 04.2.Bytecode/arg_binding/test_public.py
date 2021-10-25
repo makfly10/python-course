@@ -18,6 +18,14 @@ from .arg_binding import (  # noqa: E402
 )
 
 
+def test_no_args() -> None:
+    def foo():                  # type: ignore
+        pass
+
+    foo = cast(FunctionType, foo)
+    assert bind_args(foo) == {}
+
+
 def test_positional() -> None:
     def foo(a, b, c): pass      # type: ignore
     foo = cast(FunctionType, foo)
@@ -149,6 +157,14 @@ def test_posonly_varkwargs() -> None:
     foo = cast(FunctionType, foo)
 
     assert bind_args(foo, 1, a=2) == dict(a=1, kwargs=dict(a=2))
+
+
+def test_local_variables_only() -> None:
+    def foo():                  # type: ignore
+        a_local_variable = 123  # noqa
+
+    foo = cast(FunctionType, foo)
+    assert bind_args(foo) == {}
 
 
 def test_local_variables() -> None:
