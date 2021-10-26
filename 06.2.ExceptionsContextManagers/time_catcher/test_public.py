@@ -7,6 +7,7 @@ import pytest
 from .time_catcher import TimeCatcher, SoftTimeoutException, HardTimeoutException, TimeoutException
 
 
+# match string like: "Time consumed: 0.1234" or "Time consumed: 10.1234"
 STR_PATTERN = re.compile(r"Time consumed: \d+\.\d{4}")
 
 
