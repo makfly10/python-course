@@ -32,8 +32,8 @@ def problem_example():
 Удостоверьтесь, что у вас mypy версии 0.782
 
 ```bash
-$ ~/.pyenv/versions/shad_2020/bin/mypy --version
-mypy 0.782
+$ ~/.pyenv/versions/shad_2021/bin/mypy --version
+mypy 0.910
 ```
 
 Чтобы запускать mypy в jupyter-ноутбуке, посмотрите Readme в папке с лекциями.
