@@ -10,7 +10,7 @@
 
 ### Про задачу
 
-* Здесь вам нужно вспомнить, как создавать [классы-генераторы](https://mypy.readthedocs.io/en/latest/generics.html)
+* Здесь вам нужно вспомнить, как создавать [классы-генерики](https://mypy.readthedocs.io/en/latest/generics.html)
 * Для того, чтоб в методе ```__iadd__``` сослаться на себя, нужно воспользоваться [Forward reference](https://mypy.readthedocs.io/en/latest/runtime_troubles.html?highlight=forward%20reference#class-name-forward-references)
 * TypeVar для генериков нужно сделать [с ограничениями](https://mypy.readthedocs.io/en/latest/generics.html#type-variables-with-value-restriction)
 * В тестах проверяется:
