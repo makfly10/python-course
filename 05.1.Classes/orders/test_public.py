@@ -24,6 +24,16 @@ def test_no_init_implemented() -> None:
             assert not re.match('.*__init__.*', i), 'You should not use __init__ in dataclasses'
 
 
+def test_no_compare_implemented() -> None:
+    solution_file = Path(__file__).parent / 'orders.py'
+    assert solution_file.exists()
+
+    with open(solution_file) as f:
+        for i in f:
+            for method in ['__eq__', '__ne__', '__lt__', '__gt__', '__le__', '__ge__']:
+                assert not re.match(f'.*{method}.*', i), f'You should not use {method} in this task. Do it with field()'
+
+
 def test_item_params_check() -> None:
     Item(item_id=-1, title='Spoon', cost=25)
 

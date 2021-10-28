@@ -6,6 +6,7 @@ DISCOUNT_PERCENTS = 15
 
 
 class Item:
+    # note: mind the order of fields (!)
     cost: int
     title: str
     item_id: int
