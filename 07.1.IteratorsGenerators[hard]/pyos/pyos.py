@@ -73,7 +73,7 @@ class Scheduler:
         """
 
     def run(self, ticks: Optional[int] = None) -> None:
-        """Executes tasks consequentely, gets yielded system calls,
+        """Executes tasks consequently, gets yielded system calls,
         handles them and reschedules task if needed
         :param ticks: number of iterations (task steps), infinite if not passed
         """
