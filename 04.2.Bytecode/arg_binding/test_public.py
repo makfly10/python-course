@@ -159,6 +159,16 @@ def test_posonly_varkwargs() -> None:
     assert bind_args(foo, 1, a=2) == dict(a=1, kwargs=dict(a=2))
 
 
+def test_kwonly_varkwargs() -> None:
+    def foo(*, d, e, f='default', **kekwargs): pass  # type: ignore
+    foo = cast(FunctionType, foo)
+
+    assert bind_args(foo, d=4, e=5, f=6) \
+        == dict(d=4, e=5, f=6, kekwargs={})
+    assert bind_args(foo, z=1, d=4, e=5, f=6) \
+        == dict(d=4, e=5, f=6, kekwargs={"z": 1})
+
+
 def test_local_variables_only() -> None:
     def foo():                  # type: ignore
         a_local_variable = 123  # noqa
