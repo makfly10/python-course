@@ -16,12 +16,12 @@ def strptime(dt_str: str, fmt: str) -> datetime:
 
 
 def diff(first_dt: datetime, second_dt: datetime) -> int:
-    """Return seconds between two datetimes rounded to int"""
+    """Return seconds between two datetimes rounded down to closest int"""
 
 
 def timestamp(dt: datetime) -> int:
-    """Return timestamp for given datetime rounded to int"""
+    """Return timestamp for given datetime rounded down to closest int"""
 
 
-def from_timestamp(ts: int) -> datetime:
+def from_timestamp(ts: float) -> datetime:
     """Return datetime from given timestamp"""
