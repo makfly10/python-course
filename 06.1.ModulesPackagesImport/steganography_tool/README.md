@@ -5,7 +5,7 @@
 ### Условие
 
 В этой задачке нужно собрать свой пакет простенькой LSB стенографией.  
-Основные функии уже написаны за вас, нужно только обернуть это всё в маленький пакетик и написать cli.  
+Основные функции уже написаны за вас, нужно только обернуть это всё в маленький пакетик и написать cli.  
 
 Про саму LSB стенографию можно почитать, например, [в посте на хабре](https://habr.com/ru/post/422593/). Кратко её можно изобразить следующим образом:
 ![lsb_steganography](./lsb_steganography.png)
@@ -23,7 +23,7 @@
 
 * Весь код в папке будет установлен в тестирующую систему через `pip wheel` & `pip install`
 * Из [документации python](https://packaging.python.org/tutorials/packaging-projects/#configuring-metadata): `Static metadata (setup.cfg) should be preferred.`
-* В этом модуле используется библиотечка `PIL` (`Pillow`). Eё **нет** в тестирующей ситеме, но можно прописать её в requires к модулю 
+* В этом модуле используется библиотечка `PIL` (`Pillow`). Её **нет** в тестирующей системе, но можно прописать её в requires к модулю 
 * Нужно написать свой `cli`. Для этого можно использовать что угодно, но мы рекомендуем [click](https://palletsprojects.com/p/click/) (тоже нет в тестирующей системе)
 * Все сообщения нужно скрывать в картинке `lenna.png`. Чтобы получить к ней доступ после установки нужно пробросить её как `package_data` 
 * Тесты без установки, скорее всего, не запустятся 
@@ -39,7 +39,7 @@ $ ~/.pyenv/versions/shad_env/bin/pip wheel --wheel-dir 06.1.ModulesPackagesImpor
 # Посмотреть какие файлы упаковались в wheel
 $ tar --list -f 06.1.ModulesPackagesImport/steganography_tool/dist/steganography_tool-0.0.1-py3-none-any.whl  
 
-# Устанавливаем собраный wheel для steganography_tool
+# Устанавливаем собранный wheel для steganography_tool
 $ ~/.pyenv/versions/shad_env/bin/pip install 06.1.ModulesPackagesImport/steganography_tool/ --prefer-binary --force-reinstall --find-links 06.1.ModulesPackagesImport/steganography_tool/dist/
 
 # Стал доступен модуль steganography_tool в интерпретаторе
@@ -48,7 +48,7 @@ $ steganography-tool
 # Теперь можете запустить тесты, которые используют модуль steganography_tool в импортах
 $ ~/.pyenv/versions/shad_env/bin/pytest 06.1.ModulesPackagesImport/steganography_tool
 ```
-Причем нужно переустанавливать пакет если вы меняйте metadata.
+Причем нужно переустанавливать пакет если вы меняете metadata.
 
 
 ### Command line interface
@@ -71,9 +71,9 @@ $ steganography-tool decode encoded.png
 
 
 ## Полезные материалы 
-* https://packaging.python.org/tutorials/packaging-projects/
-* https://docs.python.org/3/tutorial/modules.html
-* https://pythonwheels.com/
-* https://habr.com/ru/post/422593/ (про lsb)
-* https://habr.com/ru/post/210450/ (_древняя_ статья про wheels. только для общего понимания)
-* https://palletsprojects.com/p/click/ (click)
+* [https://packaging.python.org/tutorials/packaging-projects/](https://packaging.python.org/tutorials/packaging-projects/)
+* [https://docs.python.org/3/tutorial/modules.html](https://packaging.python.org/tutorials/packaging-projects/)
+* [https://pythonwheels.com/](https://packaging.python.org/tutorials/packaging-projects/)
+* [про lsb](https://habr.com/ru/post/422593/)
+* [_древняя_ статья про wheels. только для общего понимания](https://habr.com/ru/post/210450/)
+* [click](https://palletsprojects.com/p/click/)
