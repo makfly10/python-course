@@ -6,9 +6,9 @@ from time import sleep
 from psutil import Process
 
 
-VERBOSE = int(environ.get("VERBOSE", "0"))
-SLEEP_PERIOD = float(environ.get("WATCHDOG_PERIOD", "100")) / 1000.0  # in msec
-WIDTH = int(environ.get("PLOT_WIDTH", "100")) // 5 * 5
+VERBOSE = int(environ.get('VERBOSE', '0'))
+SLEEP_PERIOD = float(environ.get('WATCHDOG_PERIOD', '100')) / 1000.0  # in msec
+WIDTH = int(environ.get('PLOT_WIDTH', '100')) // 5 * 5
 SELF_PROCESS = Process(getpid())
 
 
@@ -27,14 +27,14 @@ class MemoryWatchdog(Thread):
 
         if VERBOSE:
             # To not interfere with pytest output.
-            print("", file=stderr)
-            header = ""
+            print('', file=stderr)
+            header = ''
             for i in range(0, WIDTH - 10, 10):
                 marking_in_kib = (i * self.limit // WIDTH) // 1024
                 header += str(marking_in_kib).ljust(10)
             header = header.ljust(WIDTH)
             header += str(self.limit_in_kib)
-            header = " " * 10 + header
+            header = ' ' * 10 + header
             print(header, file=stderr)
 
         super().__init__()
@@ -48,16 +48,16 @@ class MemoryWatchdog(Thread):
             self.maximum_memory_usage = max(self.maximum_memory_usage, usage)
 
             if VERBOSE:
-                line = str(usage_in_kib).ljust(9) + "|" + "=" * min(WIDTH, usage * WIDTH // self.limit)
+                line = str(usage_in_kib).ljust(9) + '|' + '=' * min(WIDTH, usage * WIDTH // self.limit)
                 if usage > self.limit:
-                    line += min(10, (usage - self.limit) * WIDTH // self.limit) * "X"
+                    line += min(10, (usage - self.limit) * WIDTH // self.limit) * 'X'
                 print(line, file=stderr)
 
             sleep(SLEEP_PERIOD)
 
         if not self._is_baseline:
-            print("Maximum memory usage / limit (in KiB):",
-                  self.maximum_memory_usage // 1024, "/", self.limit // 1024, file=stderr)
+            print('Maximum memory usage / limit (in KiB):',
+                  self.maximum_memory_usage // 1024, '/', self.limit // 1024, file=stderr)
 
     def stop(self) -> None:
         self._stop_event.set()

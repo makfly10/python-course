@@ -195,7 +195,7 @@ def test_yandex_maps() -> None:
 # ########## HEAVY TESTS WITH MEMORY TRACKING ##########
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope='function')
 def baseline_memory() -> tp.Generator[int, None, None]:
     yield _run_watchdog(lambda: time.sleep(0.1), limit=100 * MiB, is_baseline=True)
 
