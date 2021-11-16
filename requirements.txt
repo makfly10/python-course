@@ -40,3 +40,6 @@ requests-mock==1.9.3
 pytest-mock==3.6.1
 pytest-cov==2.12.1
 psutil==5.8.0
+
+# types
+types-requests==2.26.0
