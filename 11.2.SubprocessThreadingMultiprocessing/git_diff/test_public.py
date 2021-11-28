@@ -8,34 +8,21 @@ import pytest
 from .git_diff import get_changed_dirs
 
 
-GIT_REPO_DIR = Path(__file__).parent / 'testdata'
-
-
-def rmtree(path: Path) -> None:
-    for child in path.iterdir():
-        if child.is_file():
-            child.unlink()
-        else:
-            rmtree(child)
-    path.rmdir()
-
-
-@pytest.fixture(scope="session", autouse=True)
-def unzip_git_repo() -> tp.Generator[None, None, None]:
+@pytest.fixture(scope="function", autouse=True)
+def unzip_git_repo(tmp_path: Path) -> tp.Generator[Path, None, None]:
     with zipfile.ZipFile(Path(__file__).parent / 'testdata.zip', 'r') as zip_ref:
-        zip_ref.extractall(Path(__file__).parent)
-    yield
-    rmtree(GIT_REPO_DIR)
+        zip_ref.extractall(tmp_path)
+    yield tmp_path / 'testdata'
 
 
 tasks = {
-    1: GIT_REPO_DIR / 'task1',
-    2: GIT_REPO_DIR / 'task2',
-    3: GIT_REPO_DIR / 'task3',
-    4: GIT_REPO_DIR / 'task4',
-    5: GIT_REPO_DIR / 'task5',
-    6: GIT_REPO_DIR / 'task6',
-    7: GIT_REPO_DIR / 'task7',
+    1: 'task1',
+    2: 'task2',
+    3: 'task3',
+    4: 'task4',
+    5: 'task5',
+    6: 'task6',
+    7: 'task7',
 }
 
 
@@ -43,7 +30,7 @@ tasks = {
 class Case:
     from_commit_hash: str
     to_commit_hash: str
-    expected_dirs: tp.Set[Path]
+    expected_dirs: tp.Set[str]
 
 
 TEST_CASES = [
@@ -71,10 +58,11 @@ TEST_CASES = [
 
 
 @pytest.mark.parametrize('case', TEST_CASES, ids=str)
-def test_git_diff(case: Case) -> None:
+def test_git_diff(case: Case, unzip_git_repo: Path) -> None:
     dirs = get_changed_dirs(
-        GIT_REPO_DIR,
+        unzip_git_repo,
         case.from_commit_hash,
         case.to_commit_hash
     )
-    assert case.expected_dirs == dirs
+
+    assert dirs == {unzip_git_repo / d for d in case.expected_dirs}
