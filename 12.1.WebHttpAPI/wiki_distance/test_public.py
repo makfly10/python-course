@@ -76,10 +76,10 @@ def custom_matcher(request: requests_mock.request._RequestObjectProxy) -> reques
     return resp
 
 
-@requests_mock.Mocker(kw="m")
+@requests_mock.Mocker(kw='m')
 @pytest.mark.parametrize('case', CASES, ids=str)
 def test_distance(case: Case, **kwargs: requests_mock.Adapter) -> None:
-    m = kwargs["m"]
+    m = kwargs['m']
     m.add_matcher(custom_matcher)
 
     assert distance(wiki_url(case.source_article), wiki_url(case.target_article)) == case.distance

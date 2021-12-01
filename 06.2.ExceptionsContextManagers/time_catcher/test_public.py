@@ -8,7 +8,7 @@ from .time_catcher import TimeCatcher, SoftTimeoutException, HardTimeoutExceptio
 
 
 # match string like: "Time consumed: 0.1234" or "Time consumed: 10.1234"
-STR_PATTERN = re.compile(r"Time consumed: \d+\.\d{4}")
+STR_PATTERN = re.compile(r'Time consumed: \d+\.\d{4}')
 
 
 @pytest.mark.parametrize('soft_timeout,hard_timeout,correct', [

@@ -32,7 +32,7 @@ def test_solution_zip_exists() -> None:
     assert zip_path.exists() and zip_path.is_file()
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture(scope='session')
 def repo() -> tp.Generator[git.Repo, None, None]:
     unarchived_path = 'solved'
     zip_path = Path(__file__).parent / 'repo_solved.zip'
@@ -71,12 +71,12 @@ def test_conflict_resolution(repo: git.Repo) -> None:
     repo.head.reset(index=True, working_tree=True)
     pt = os.path.abspath(str(Path(repo.git_dir) / '..' / 'hello_world.py'))
 
-    spec = importlib.util.spec_from_file_location("hello_world", pt)
+    spec = importlib.util.spec_from_file_location('hello_world', pt)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    assert module.get_hello_world() == "Hello, World!", "get_hello_world should return the string 'Hello, World!'"
+    assert module.get_hello_world() == 'Hello, World!', 'get_hello_world should return the string "Hello, World!"'
 
 
 def test_move(repo: git.Repo) -> None:
-    assert _get_md5ify(repo.commit("move_me_back").hexsha) == "99e902d43b155ee357fb1277a83472cf", \
-        "The move_me_back branch should point to the commit where the secret code has been found, but it doesn't"
+    assert _get_md5ify(repo.commit('move_me_back').hexsha) == '99e902d43b155ee357fb1277a83472cf', \
+        'The move_me_back branch should point to the commit where the secret code has been found, but it doesn\'t'

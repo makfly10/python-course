@@ -2,7 +2,7 @@ import pytest
 from cryptography.fernet import InvalidToken
 
 from simple_pass_manager.utils.encryption import password_decrypt, password_encrypt, \
-    generate_key, key_decrypt, key_encrypt
+     generate_key, key_decrypt, key_encrypt
 
 
 class TestKey:
@@ -11,17 +11,14 @@ class TestKey:
         assert isinstance(key, bytes)
         assert 0 < len(key) < 128
 
-    @pytest.mark.parametrize(
-        "message",
-        [
-            '',
-            'a',
-            '123',
-            '@($#NDASK()(!@SDAK as ASDJ)@JKLDSA)@++',
-            '😀 Grinning Face 😵‍💫 Face with Spiral Eyes',
-            '128' * 128,
-        ],
-    )
+    @pytest.mark.parametrize('message', [
+        '',
+        'a',
+        '123',
+        '@($#NDASK()(!@SDAK as ASDJ)@JKLDSA)@++',
+        '😀 Grinning Face 😵‍💫 Face with Spiral Eyes',
+        '128' * 128,
+    ])
     def test_encrypt_decrypt(self, message: str) -> None:
         message_bytes = message.encode()
         key = generate_key()
@@ -38,24 +35,18 @@ class TestKey:
 
 
 class TestPassword:
-    @pytest.mark.parametrize(
-        "message",
-        [
-            '',
-            'a',
-            '123',
-            '@($#NDASK()(!@SDAK as ASDJ)@JKLDSA)@++',
-            '😀 Grinning Face 😵‍💫 Face with Spiral Eyes',
-            '128' * 128,
-        ],
-    )
-    @pytest.mark.parametrize(
-        "password",
-        [
-            'password',
-            '64' * 16,
-        ],
-    )
+    @pytest.mark.parametrize('message', [
+        '',
+        'a',
+        '123',
+        '@($#NDASK()(!@SDAK as ASDJ)@JKLDSA)@++',
+        '😀 Grinning Face 😵‍💫 Face with Spiral Eyes',
+        '128' * 128,
+    ])
+    @pytest.mark.parametrize('password', [
+        'password',
+        '64' * 16,
+    ])
     def test_encrypt_decrypt(self, message: str, password: str) -> None:
         message_bytes = message.encode()
 

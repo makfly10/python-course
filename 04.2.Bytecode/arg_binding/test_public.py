@@ -166,7 +166,7 @@ def test_kwonly_varkwargs() -> None:
     assert bind_args(foo, d=4, e=5, f=6) \
         == dict(d=4, e=5, f=6, kekwargs={})
     assert bind_args(foo, z=1, d=4, e=5, f=6) \
-        == dict(d=4, e=5, f=6, kekwargs={"z": 1})
+        == dict(d=4, e=5, f=6, kekwargs={'z': 1})
 
 
 def test_local_variables_only() -> None:

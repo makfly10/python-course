@@ -49,7 +49,7 @@ def test_supresser_idles() -> None:
     except Exception as e:
         assert False, 'wrong exception type {}'.format(e)
     else:
-        assert False, "no exception"
+        assert False, 'no exception'
 
 
 def test_supresser_supress() -> None:
@@ -71,9 +71,9 @@ def test_dumper_stream() -> None:
     except ValueError:
         assert msg in stream.getvalue()
     except Exception:
-        assert False, "wrong exception"
+        assert False, 'wrong exception'
     else:
-        assert False, "dumper should throw"
+        assert False, 'dumper should throw'
 
 
 def test_dumped_stderr(capsys) -> None:  # type: ignore
@@ -85,6 +85,6 @@ def test_dumped_stderr(capsys) -> None:  # type: ignore
         captured = capsys.readouterr()
         assert msg in captured.err
     except Exception:
-        assert False, "wrong exception"
+        assert False, 'wrong exception'
     else:
-        assert False, "dumper should throw"
+        assert False, 'dumper should throw'

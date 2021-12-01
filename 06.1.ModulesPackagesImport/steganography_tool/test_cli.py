@@ -6,12 +6,17 @@ import pytest
 
 
 def _run(command: list[str]) -> tuple[int, str, str]:
+    """
+    IMPORTANT: This way should NOT be used for cli test in particular.
+    We do it here ONLY 'cause this tests are framework agnostic (you can choose any framework in this task).
+    Please, use library recommended approach to test (e.g. `CliRunner` for `click`)
+    """
     result = subprocess.run(command, capture_output=True, text=True)
     return result.returncode, result.stdout, result.stderr
 
 
 class TestCli:
-    @pytest.mark.parametrize("command_name", ['', 'decode', 'encode'])
+    @pytest.mark.parametrize('command_name', ['', 'decode', 'encode'])
     def test_help(self, command_name: str) -> None:
         if not command_name:
             command = ['steganography-tool', '--help']

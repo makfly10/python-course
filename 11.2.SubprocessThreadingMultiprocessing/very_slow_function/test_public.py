@@ -83,7 +83,7 @@ def test_speed() -> None:
 
     assert time_simple > time_multiprocessing
 
-    print("\nelapsed time for:")
-    print(f"\t1. calc_squares_simple: {time_simple:.2f}s")
-    print(f"\t2. calc_squares_multithreading: {time_multithreading:.2f}s")
-    print(f"\t3. calc_squares_multiprocessing: {time_multiprocessing:.2f}s")
+    print('\nelapsed time for:')
+    print(f'\t1. calc_squares_simple: {time_simple:.2f}s')
+    print(f'\t2. calc_squares_multithreading: {time_multithreading:.2f}s')
+    print(f'\t3. calc_squares_multiprocessing: {time_multiprocessing:.2f}s')

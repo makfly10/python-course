@@ -7,7 +7,7 @@ import pytest
 from . import time_to_range
 
 
-@pytest.mark.parametrize("gtd, dt, expected", [
+@pytest.mark.parametrize('gtd, dt, expected', [
     (time_to_range.GranularityEnum.THIRTY_MIN, datetime(2020, 9, 30, 10, 21), datetime(2020, 9, 30, 10, 51)),
     (time_to_range.GranularityEnum.FIVE_MIN, datetime(2020, 9, 30, 10, 31), datetime(2020, 9, 30, 10, 36)),
     (time_to_range.GranularityEnum.HOUR, datetime(2020, 9, 30, 10, 30), datetime(2020, 9, 30, 11, 30)),
@@ -18,7 +18,7 @@ def test_granularity_enum(gtd: time_to_range.GranularityEnum, dt: datetime, expe
     assert dt + gtd.value == expected
 
 
-@pytest.mark.parametrize("gtd, dt, truncated_dt", [
+@pytest.mark.parametrize('gtd, dt, truncated_dt', [
     (time_to_range.GranularityEnum.HOUR, datetime(2020, 9, 30, 23, 18, 24), datetime(2020, 9, 30, 23, 0, 0)),
     (time_to_range.GranularityEnum.THIRTY_MIN, datetime(2020, 9, 30, 10, 21), datetime(2020, 9, 30, 10, 00)),
     (time_to_range.GranularityEnum.THIRTY_MIN, datetime(2020, 9, 30, 10, 31), datetime(2020, 9, 30, 10, 30)),
@@ -94,13 +94,13 @@ TEST_CASES = [
 
 @pytest.mark.parametrize('t', TEST_CASES)
 def test_dt_range(t: Case) -> None:
-    assert all(mth.startswith("_") for mth in dir(time_to_range.DtRange)), "You shouldn't make any public methods." \
+    assert all(mth.startswith('_') for mth in dir(time_to_range.DtRange)), "You shouldn't make any public methods." \
                                                                            "They are not part of public interface"
 
     dt_range = time_to_range.DtRange(before=t.before, after=t.after, shift=t.shift, gtd=t.gtd)
     assert dt_range(t.dt) == t.expected
 
-    assert all(attr.startswith("_") for attr in dt_range.__dict__), "You shouldn't make any public attributes. " \
+    assert all(attr.startswith('_') for attr in dt_range.__dict__), "You shouldn't make any public attributes. " \
                                                                     "They are not part of public interface"
 
 
@@ -152,6 +152,6 @@ INTERVAL_TEST_CASES = [
 ]
 
 
-@pytest.mark.parametrize("t", INTERVAL_TEST_CASES)
+@pytest.mark.parametrize('t', INTERVAL_TEST_CASES)
 def test_get_interval(t: IntervalCase) -> None:
     assert time_to_range.get_interval(t.start_dt, t.end_dt, t.gtd) == t.expected

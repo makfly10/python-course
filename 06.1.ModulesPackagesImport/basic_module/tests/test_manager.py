@@ -25,7 +25,7 @@ class TestPasswordManager:
             password_manager = PasswordManager(secret_password, default_pass_len=16)
             password_manager.generate_password(2)
 
-    @pytest.mark.parametrize("obj", [
+    @pytest.mark.parametrize('obj', [
         '1234', '', '(@JFA_SK{FASDFPK@P)$(M$F', b'1234', b'', b'JSDFNJ)!N)!FI)!CSL:AD'
     ])
     def test_hash(self, obj: Union[str, bytes]) -> None:

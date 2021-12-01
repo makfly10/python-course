@@ -11,13 +11,13 @@ FILE_PATH = os.path.join(os.path.dirname(__file__), 'titanic.csv')
 
 
 def test_all() -> None:
-    df = pd.read_csv(FILE_PATH, sep="\t")
+    df = pd.read_csv(FILE_PATH, sep='\t')
 
     np.testing.assert_allclose(male_age(df), 30.)
 
     assert set(nan_columns(df)) == {'Age', 'Cabin', 'Embarked'}
 
-    class_distr_ans = pd.Series(data=[0.192308, 0.192308, 0.615385], index=[1, 2, 3], name="Pclass")
+    class_distr_ans = pd.Series(data=[0.192308, 0.192308, 0.615385], index=[1, 2, 3], name='Pclass')
     assert_series_equal(class_distribution(df).sort_index(), class_distr_ans)
 
     assert families_count(df, 0) == 141
@@ -26,18 +26,18 @@ def test_all() -> None:
     assert families_count(df, 3) == 1
     assert families_count(df, 4) == 0
 
-    np.testing.assert_allclose(mean_price(df, df["Ticket"].unique()), df["Fare"].mean())
+    np.testing.assert_allclose(mean_price(df, df['Ticket'].unique()), df['Fare'].mean())
 
     for i, row in df.iterrows():
-        np.testing.assert_allclose(mean_price(df, [row["Ticket"]]), row["Fare"])
+        np.testing.assert_allclose(mean_price(df, [row['Ticket']]), row['Fare'])
 
     value = 26.0
-    tickets = df[np.isclose(df["Fare"], value)]["Ticket"]
+    tickets = df[np.isclose(df['Fare'], value)]['Ticket']
     np.testing.assert_allclose(mean_price(df, tickets), value)
 
-    assert max_size_group(df, ["Survived", "Sex"]) == (0, "male")
-    assert max_size_group(df, ["Survived", "Sex", "Cabin"]) == (0, "male", "D26")
-    assert max_size_group(df, ["Embarked", "Pclass"]) == ("S", 3)
-    assert max_size_group(df, ["Age"]) == (21.00, )
+    assert max_size_group(df, ['Survived', 'Sex']) == (0, 'male')
+    assert max_size_group(df, ['Survived', 'Sex', 'Cabin']) == (0, 'male', 'D26')
+    assert max_size_group(df, ['Embarked', 'Pclass']) == ('S', 3)
+    assert max_size_group(df, ['Age']) == (21.00, )
 
     np.testing.assert_allclose(dead_lucky(df), 0.75)

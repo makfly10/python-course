@@ -39,7 +39,7 @@ def test_import_module_import() -> None:
 
 
 @pytest.mark.parametrize(
-    "module_name,all_list",
+    'module_name,all_list',
     [
         (
             'simple_pass_manager',

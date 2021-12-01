@@ -6,14 +6,14 @@ from simple_pass_manager.utils.generation import generate_urlsafe_password, gene
 
 
 class TestUrlsafeGenerators:
-    @pytest.mark.parametrize("pass_len", [1, 10, 16, 32, 128])
+    @pytest.mark.parametrize('pass_len', [1, 10, 16, 32, 128])
     def test_length(self, pass_len: int) -> None:
         password = generate_urlsafe_password(pass_len=pass_len)
         assert len(password) == pass_len
 
 
 class TestGeneralGenerators:
-    @pytest.mark.parametrize("pass_len", [1, 10, 16, 32, 128])
+    @pytest.mark.parametrize('pass_len', [1, 10, 16, 32, 128])
     def test_length(self, pass_len: int) -> None:
         password = generate_password(pass_len=pass_len)
         assert len(password) == pass_len

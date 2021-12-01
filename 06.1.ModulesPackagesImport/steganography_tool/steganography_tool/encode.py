@@ -5,7 +5,7 @@ def encode_message(data: np.ndarray, message: str) -> np.ndarray:
     width, height = data.shape[0:2]
 
     # Encode the message in a series of 8-bit values
-    b_message = ''.join(["{:08b}".format(ord(x)) for x in message])
+    b_message = ''.join(['{:08b}'.format(ord(x)) for x in message])
     b_message_list = [int(x) for x in b_message]
 
     b_message_length = len(b_message)

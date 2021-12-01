@@ -8,7 +8,7 @@ import pytest
 from .orders import Item, Position, CountedPosition, WeightedPosition, Order
 
 
-@pytest.mark.parametrize("class_type", [
+@pytest.mark.parametrize('class_type', [
     Item, Position, CountedPosition, WeightedPosition, Order
 ])
 def test_class_type(class_type: Any) -> None:
@@ -47,7 +47,7 @@ def test_item_params_check() -> None:
 
 
 def test_item_frozen() -> None:
-    item = Item(item_id=0, cost=500, title="Sub-Zero")
+    item = Item(item_id=0, cost=500, title='Sub-Zero')
     with pytest.raises(FrozenInstanceError):
         item.item_id = 10  # type: ignore
 
@@ -69,7 +69,7 @@ def test_items_sort() -> None:
     assert [i.item_id for i in sorted(items)] == [0, 15, 9, 11, 1, 8]
 
 
-@pytest.mark.parametrize("class_type", [
+@pytest.mark.parametrize('class_type', [
     CountedPosition, WeightedPosition
 ])
 def test_position_inheritance(class_type: Any) -> None:
@@ -86,7 +86,7 @@ def test_position_is_abstract() -> None:
     assert "Can't instantiate abstract class Position with abstract method cost" in str(e.value)
 
 
-@pytest.mark.parametrize("class_, input_, expected_cost", [
+@pytest.mark.parametrize('class_, input_, expected_cost', [
     (CountedPosition, dict(item=Item(0, 'USB cable', 256)), 256),
     (CountedPosition, dict(item=Item(0, 'USB cable', 256), count=4), 1024),
     (CountedPosition, dict(item=Item(0, 'USB plug', 256), count=2), 512),
@@ -103,7 +103,7 @@ def test_position_cost(class_: type, input_: dict[str, Any], expected_cost: int)
     assert isinstance(position.cost, float) or isinstance(position.cost, int)
 
 
-@pytest.mark.parametrize("input_, expected_cost", [
+@pytest.mark.parametrize('input_, expected_cost', [
     (dict(positions=[CountedPosition(Item(0, 'USB cable', 256), count=4)]), 1024),
     (dict(positions=[CountedPosition(Item(0, 'USB cable', 256), count=2)], have_promo=True), 435),
     (dict(positions=[CountedPosition(Item(i, 'Book', i * 100), count=i) for i in range(5, 8)]), 11000),

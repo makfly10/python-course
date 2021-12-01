@@ -258,7 +258,7 @@ TESTS = [
 ]
 
 
-@pytest.mark.parametrize("test_case", TESTS)
+@pytest.mark.parametrize('test_case', TESTS)
 def test_life_game(test_case: Case) -> None:
     game = LifeGame(test_case.board)
     generation = None

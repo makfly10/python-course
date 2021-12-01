@@ -49,7 +49,7 @@ def test_version() -> None:
     assert '3.9.7' == sys.version.split(' ', maxsplit=1)[0]
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope='module')
 def task_scorer() -> tp.Generator[Scorer, None, None]:
     scorer = Scorer()
     yield scorer
@@ -57,7 +57,7 @@ def task_scorer() -> tp.Generator[Scorer, None, None]:
     print(scorer)
 
 
-@pytest.mark.parametrize("test,score", zip(cases.TEST_CASES, SCORES), ids=IDS)
+@pytest.mark.parametrize('test,score', zip(cases.TEST_CASES, SCORES), ids=IDS)
 def test_all_cases(test: cases.Case, score: float, task_scorer: Scorer) -> None:
     """
     Compare all test cases with etalon
