@@ -65,7 +65,7 @@ if( window.location.search.match( /print-pdf/gi ) ) {
     <!-- End of mathjax configuration -->
 
 <style type="text/css">
-    pre { line-height: 125%; margin: 0; }
+    pre { line-height: 125%; }
 td.linenos pre { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: #000000; background-color: #f0f0f0; padding-left: 5px; padding-right: 5px; }
 td.linenos pre.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
@@ -14390,7 +14390,8 @@ div.jp-OutputPrompt {
 <br />
 <h1>Как писать прикладное API</h1>
 <br />
-<h4>2020</h4> </center>
+<h5>Камиль Талипов</h5>
+<h4>2021</h4> </center>
 </div>
 </div></section></section><section><section>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14405,12 +14406,13 @@ div.jp-OutputPrompt {
 <pre><code>1. Формат: REST, RPC и т.д.
 2. Технологии (язык, библиотеки и т.д.)
 3. Документация
-4. Валидация прав и данных от пользователя
-5. Сообщение об ошибках
-6. Расширяемость и версионирование
-7. Безопасность
-8. Масштабируемость
-9. И многое другое...</code></pre>
+4. Тестирование
+5. Валидация прав и данных от пользователя
+6. Сообщение об ошибках
+7. Расширяемость и версионирование
+8. Безопасность
+9. Масштабируемость
+10. И многое другое...</code></pre>
 
 </div>
 </div></section></section><section><section>
@@ -14481,13 +14483,11 @@ the Design of Network-based Software Architectures</a>.</p>
 <p>Для написания REST API существует очень много самых разнообразных библиотек и фреймворков.<br>
 Вот некоторые из них:</p>
 <ol>
-<li>Django Rest</li>
-<li>Flask-RESTful</li>
-<li>Flask RESTX (prev. Flask-RESTplus)</li>
 <li>AIOHTTP</li>
+<li>Django, Django Rest</li>
+<li>Flask, Flask RESTX (ex. Flask-RESTplus), etc</li>
 <li>Falcon</li>
 <li>Pyramid</li>
-<li>Tornado</li>
 <li>FastAPI</li>
 </ol>
 
@@ -14513,6 +14513,15 @@ the Design of Network-based Software Architectures</a>.</p>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>Code demo</p>
+
+</div>
+</div></section></section><section><section>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Важно! Примеры были с чистым uvicorn.</p>
+<p>Он не умеет полноценно перезапускать воркеры.</p>
+<p>Для реальных вещей стоит использовать связку Gunicorn + Uvicorn.</p>
+<p>Подробнее: <a href="https://fastapi.tiangolo.com/deployment/server-workers/">https://fastapi.tiangolo.com/deployment/server-workers/</a></p>
 
 </div>
 </div></section></section><section><section>
