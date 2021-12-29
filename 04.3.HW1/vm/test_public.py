@@ -23,10 +23,14 @@ SCORES = [SCORER.score(test) for test in TESTS]
 class Scorer:
     def __init__(self) -> None:
         self._score: float = 0.
+        self._total: float = 0.
         self._blocking_error: bool = False
 
     def add_blocking_error(self) -> None:
         self._blocking_error = True
+
+    def add_total(self, score: float) -> None:
+        self._total += score
 
     def add_score(self, score: float) -> None:
         self._score += score
@@ -38,8 +42,19 @@ class Scorer:
         else:
             return self._score
 
+    @property
+    def percent(self) -> float:
+        if self._total:
+            return self.score / self._total
+        else:
+            return 0.
+
     def __str__(self) -> str:
-        return f'\nSummary score is: {self.score}'
+        return '\n'.join([
+            '',
+            f'Summary score is: {self.score}',
+            f'Summary score percentage is: {self.percent}',
+        ])
 
 
 def test_version() -> None:
@@ -60,10 +75,13 @@ def task_scorer() -> tp.Generator[Scorer, None, None]:
 @pytest.mark.parametrize('test,score', zip(cases.TEST_CASES, SCORES), ids=IDS)
 def test_all_cases(test: cases.Case, score: float, task_scorer: Scorer) -> None:
     """
-    Compare all test cases with etalon
+    Compare all test cases with reference solution
     :param test: test case to check
     :param score: score for test if passed
     """
+    # Add score to total in scorer
+    task_scorer.add_total(score)
+
     code = vm_runner.compile_code(test.text_code)
     globals_context: dict[str, tp.Any] = {}
     vm_out, vm_err, vm_exc = vm_runner.execute(code, vm.VirtualMachine().run)
