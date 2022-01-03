@@ -543,7 +543,6 @@ $ ~/.pyenv/versions/3.9.7/envs/shad_env/bin/jupyter notebook
 ```python
 from IPython.core.magic import register_cell_magic
 
-
 @register_cell_magic
 def typecheck(line, cell):
 
