@@ -568,5 +568,4 @@ $ vim ~/.ipython/profile_default/startup/typecheck.py
 
 Для проверки типов добавить строчку `%%typecheck` в тестируемой ячейке.  
 Для применения `mypy` ко всем запускаемым ячейкам можно использовать [Nb Mypy](https://pypi.org/project/nb-mypy/).
-
 </details>
