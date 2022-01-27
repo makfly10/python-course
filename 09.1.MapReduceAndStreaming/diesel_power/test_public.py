@@ -27,10 +27,10 @@ class _Key:
 class MapCase:
     mapper: ops.Mapper
     data: list[ops.TRow]
-    etalon: list[ops.TRow]
+    ground_truth: list[ops.TRow]
     cmp_keys: tuple[str, ...]
     mapper_item: int = 0
-    mapper_etalon_items: tuple[int, ...] = (0,)
+    mapper_ground_truth_items: tuple[int, ...] = (0,)
 
 
 MAP_CASES = [
@@ -40,7 +40,7 @@ MAP_CASES = [
             {'test_id': 1, 'text': 'one two three'},
             {'test_id': 2, 'text': 'testing out stuff'}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'text': 'one two three'},
             {'test_id': 2, 'text': 'testing out stuff'}
         ],
@@ -53,7 +53,7 @@ MAP_CASES = [
             {'test_id': 2, 'text': 'UPPER_CASE_TEST'},
             {'test_id': 3, 'text': 'wEiRdTeSt'}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'text': 'camelcasetest'},
             {'test_id': 2, 'text': 'upper_case_test'},
             {'test_id': 3, 'text': 'weirdtest'}
@@ -67,7 +67,7 @@ MAP_CASES = [
             {'test_id': 2, 'text': 'Test. with. a. lot. of. dots.'},
             {'test_id': 3, 'text': r'!"#$%&\'()*+,-./:;<=>?@[\]^_`{|}~'}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'text': 'Hello world'},
             {'test_id': 2, 'text': 'Test with a lot of dots'},
             {'test_id': 3, 'text': ''}
@@ -82,7 +82,7 @@ MAP_CASES = [
             {'test_id': 3, 'text': 'more\nlines\ntest'},
             {'test_id': 4, 'text': 'tricky\u00A0test'}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'text': 'one'},
             {'test_id': 1, 'text': 'three'},
             {'test_id': 1, 'text': 'two'},
@@ -99,7 +99,7 @@ MAP_CASES = [
             {'test_id': 4, 'text': 'tricky'}
         ],
         cmp_keys=('test_id', 'text'),
-        mapper_etalon_items=(0, 1, 2)
+        mapper_ground_truth_items=(0, 1, 2)
     ),
     MapCase(
         mapper=ops.Product(columns=['speed', 'distance'], result_column='time'),
@@ -110,7 +110,7 @@ MAP_CASES = [
             {'test_id': 4, 'speed': 100, 'distance': 0.5},
             {'test_id': 5, 'speed': 48, 'distance': 15},
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'speed': 5, 'distance': 10, 'time': 50},
             {'test_id': 2, 'speed': 60, 'distance': 2, 'time': 120},
             {'test_id': 3, 'speed': 3, 'distance': 15, 'time': 45},
@@ -127,12 +127,12 @@ MAP_CASES = [
             {'test_id': 3, 'f': 1, 'g': 0},
             {'test_id': 4, 'f': 1, 'g': 1}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 2, 'f': 0, 'g': 1},
             {'test_id': 3, 'f': 1, 'g': 0}
         ],
         cmp_keys=('test_id', 'f', 'g'),
-        mapper_etalon_items=tuple()
+        mapper_ground_truth_items=tuple()
     ),
     MapCase(
         mapper=ops.Project(columns=['value']),
@@ -141,7 +141,7 @@ MAP_CASES = [
             {'test_id': 2, 'junk': 'y', 'value': 1},
             {'test_id': 3, 'junk': 'z', 'value': 144}
         ],
-        etalon=[
+        ground_truth=[
             {'value': 42},
             {'value': 1},
             {'value': 144}
@@ -154,17 +154,17 @@ MAP_CASES = [
 @pytest.mark.parametrize('case', MAP_CASES)
 def test_mapper(case: MapCase) -> None:
     mapper_data_row = copy.deepcopy(case.data[case.mapper_item])
-    mapper_etalon_rows = [copy.deepcopy(case.etalon[i]) for i in case.mapper_etalon_items]
+    mapper_ground_truth_rows = [copy.deepcopy(case.ground_truth[i]) for i in case.mapper_ground_truth_items]
 
     key_func = _Key(*case.cmp_keys)
 
     mapper_result = case.mapper(mapper_data_row)
     assert isinstance(mapper_result, tp.Iterator)
-    assert sorted(mapper_etalon_rows, key=key_func) == sorted(mapper_result, key=key_func)
+    assert sorted(mapper_ground_truth_rows, key=key_func) == sorted(mapper_result, key=key_func)
 
     result = ops.Map(case.mapper)(iter(case.data))
     assert isinstance(result, tp.Iterator)
-    assert sorted(case.etalon, key=key_func) == sorted(result, key=key_func)
+    assert sorted(case.ground_truth, key=key_func) == sorted(result, key=key_func)
 
 
 @dataclasses.dataclass
@@ -172,10 +172,10 @@ class ReduceCase:
     reducer: ops.Reducer
     reducer_keys: tuple[str, ...]
     data: list[ops.TRow]
-    etalon: list[ops.TRow]
+    ground_truth: list[ops.TRow]
     cmp_keys: tuple[str, ...]
     reduce_data_items: tuple[int, ...] = (0,)
-    reduce_etalon_items: tuple[int, ...] = (0,)
+    reduce_ground_truth_items: tuple[int, ...] = (0,)
 
 
 REDUCE_CASES = [
@@ -186,7 +186,7 @@ REDUCE_CASES = [
             {'test_id': 1, 'text': 'hello, world'},
             {'test_id': 2, 'text': 'bye!'}
         ],
-        etalon=[
+        ground_truth=[
             {'test_id': 1, 'text': 'hello, world'},
             {'test_id': 2, 'text': 'bye!'}
         ],
@@ -206,7 +206,7 @@ REDUCE_CASES = [
             {'match_id': 2, 'player_id': 7, 'rank': 27},
             {'match_id': 2, 'player_id': 8, 'rank': 7}
         ],
-        etalon=[
+        ground_truth=[
             {'match_id': 1, 'player_id': 1, 'rank': 42},
             {'match_id': 1, 'player_id': 2, 'rank': 7},
             {'match_id': 1, 'player_id': 4, 'rank': 39},
@@ -217,7 +217,7 @@ REDUCE_CASES = [
         ],
         cmp_keys=('match_id', 'player_id', 'rank'),
         reduce_data_items=(0, 1, 2, 3),
-        reduce_etalon_items=(0, 1, 2)
+        reduce_ground_truth_items=(0, 1, 2)
     ),
     ReduceCase(
         reducer=ops.TermFrequency(words_column='text'),
@@ -248,7 +248,7 @@ REDUCE_CASES = [
             {'doc_id': 6, 'text': 'world', 'count': 4},
             {'doc_id': 6, 'text': 'hello', 'count': 1}
         ],
-        etalon=[
+        ground_truth=[
             {'doc_id': 1, 'text': 'hello', 'tf': approx(0.3333, abs=0.001)},
             {'doc_id': 1, 'text': 'little', 'tf': approx(0.3333, abs=0.001)},
             {'doc_id': 1, 'text': 'world', 'tf': approx(0.3333, abs=0.001)},
@@ -269,7 +269,7 @@ REDUCE_CASES = [
         ],
         cmp_keys=('doc_id', 'text', 'tf'),
         reduce_data_items=(0, 1, 2),
-        reduce_etalon_items=(0, 1, 2)
+        reduce_ground_truth_items=(0, 1, 2)
     ),
     ReduceCase(
         reducer=ops.Count(column='count'),
@@ -285,7 +285,7 @@ REDUCE_CASES = [
             {'sentence_id': 2, 'word': 'my'},
             {'sentence_id': 1, 'word': 'world'},
         ],
-        etalon=[
+        ground_truth=[
             {'count': 1, 'word': 'hell'},
             {'count': 1, 'word': 'world'},
             {'count': 2, 'word': 'hello'},
@@ -294,7 +294,7 @@ REDUCE_CASES = [
         ],
         cmp_keys=('count', 'word'),
         reduce_data_items=(1, 2),
-        reduce_etalon_items=(2,)
+        reduce_ground_truth_items=(2,)
     ),
     ReduceCase(
         reducer=ops.Sum(column='score'),
@@ -310,13 +310,13 @@ REDUCE_CASES = [
             {'match_id': 2, 'player_id': 7, 'score': 27},
             {'match_id': 2, 'player_id': 8, 'score': 7}
         ],
-        etalon=[
+        ground_truth=[
             {'match_id': 1, 'score': 88},
             {'match_id': 2, 'score': 88}
         ],
         cmp_keys=('test_id', 'text'),
         reduce_data_items=(0, 1, 2, 3),
-        reduce_etalon_items=(0,)
+        reduce_ground_truth_items=(0,)
     )
 
 ]
@@ -325,17 +325,17 @@ REDUCE_CASES = [
 @pytest.mark.parametrize('case', REDUCE_CASES)
 def test_reducer(case: ReduceCase) -> None:
     reducer_data_rows = [copy.deepcopy(case.data[i]) for i in case.reduce_data_items]
-    reducer_etalon_rows = [copy.deepcopy(case.etalon[i]) for i in case.reduce_etalon_items]
+    reducer_ground_truth_rows = [copy.deepcopy(case.ground_truth[i]) for i in case.reduce_ground_truth_items]
 
     key_func = _Key(*case.cmp_keys)
 
     reducer_result = case.reducer(case.reducer_keys, iter(reducer_data_rows))
     assert isinstance(reducer_result, tp.Iterator)
-    assert sorted(reducer_etalon_rows, key=key_func) == sorted(reducer_result, key=key_func)
+    assert sorted(reducer_ground_truth_rows, key=key_func) == sorted(reducer_result, key=key_func)
 
     result = ops.Reduce(case.reducer, case.reducer_keys)(iter(case.data))
     assert isinstance(result, tp.Iterator)
-    assert sorted(case.etalon, key=key_func) == sorted(result, key=key_func)
+    assert sorted(case.ground_truth, key=key_func) == sorted(result, key=key_func)
 
 
 @dataclasses.dataclass
@@ -344,11 +344,11 @@ class JoinCase:
     join_keys: tp.Sequence[str]
     data_left: list[ops.TRow]
     data_right: list[ops.TRow]
-    etalon: list[ops.TRow]
+    ground_truth: list[ops.TRow]
     cmp_keys: tuple[str, ...]
     join_data_left_items: tuple[int, ...] = (0,)
     join_data_right_items: tuple[int, ...] = (0,)
-    join_etalon_items: tuple[int, ...] = (0,)
+    join_ground_truth_items: tuple[int, ...] = (0,)
 
 
 JOIN_CASES = [
@@ -365,7 +365,7 @@ JOIN_CASES = [
             {'game_id': 3, 'player_id': 1, 'score': 22},
             {'game_id': 1, 'player_id': 3, 'score': 99}
         ],
-        etalon=[
+        ground_truth=[
             {'game_id': 1, 'player_id': 3, 'score': 99, 'username': 'Destroyer'},
             {'game_id': 2, 'player_id': 1, 'score': 17, 'username': 'XeroX'},
             {'game_id': 3, 'player_id': 1, 'score': 22, 'username': 'XeroX'}
@@ -373,7 +373,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(0,),
         join_data_right_items=(0, 1),
-        join_etalon_items=(1, 2)
+        join_ground_truth_items=(1, 2)
     ),
     JoinCase(
         joiner=ops.InnerJoiner(),
@@ -388,7 +388,7 @@ JOIN_CASES = [
             {'game_id': 3, 'player_id': 2, 'score': 22},
             {'game_id': 1, 'player_id': 3, 'score': 9999999}
         ],
-        etalon=[
+        ground_truth=[
             # player 3 is unknown
             # no games for player 0
             {'game_id': 2, 'player_id': 1, 'score': 17, 'username': 'XeroX'},
@@ -397,7 +397,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(2,),
         join_data_right_items=(1,),
-        join_etalon_items=(1,),
+        join_ground_truth_items=(1,),
     ),
     JoinCase(
         joiner=ops.OuterJoiner(),
@@ -412,7 +412,7 @@ JOIN_CASES = [
             {'game_id': 3, 'player_id': 2, 'score': 22},
             {'game_id': 1, 'player_id': 3, 'score': 9999999}
         ],
-        etalon=[
+        ground_truth=[
             {'player_id': 0, 'username': 'root'},  # no such game
             {'game_id': 1, 'player_id': 3, 'score': 9999999},  # no such player
             {'game_id': 2, 'player_id': 1, 'score': 17, 'username': 'XeroX'},
@@ -421,7 +421,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(0,),
         join_data_right_items=tuple(),
-        join_etalon_items=(0,),
+        join_ground_truth_items=(0,),
     ),
     JoinCase(
         joiner=ops.LeftJoiner(),
@@ -438,7 +438,7 @@ JOIN_CASES = [
             {'player_id': 2, 'username': 'jay'}
         ],
 
-        etalon=[
+        ground_truth=[
             # ignore player 0 with 0 games
             {'game_id': 1, 'player_id': 3, 'score': 0},  # unknown player 3
             {'game_id': 2, 'player_id': 1, 'score': 17, 'username': 'XeroX'},
@@ -448,7 +448,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(1, 2),
         join_data_right_items=(2,),
-        join_etalon_items=(2, 3)
+        join_ground_truth_items=(2, 3)
     ),
     JoinCase(
         joiner=ops.RightJoiner(),
@@ -465,7 +465,7 @@ JOIN_CASES = [
             {'player_id': 1, 'username': 'XeroX'},
             {'player_id': 2, 'username': 'jay'}
         ],
-        etalon=[
+        ground_truth=[
             # ignore game with unknown player 3
             {'player_id': 0, 'username': 'root'},  # no games for root
             {'game_id': 2, 'player_id': 1, 'score': 17, 'username': 'XeroX'},
@@ -476,7 +476,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(2, 3),
         join_data_right_items=(2,),
-        join_etalon_items=(2, 3)
+        join_ground_truth_items=(2, 3)
     ),
     JoinCase(
         joiner=ops.InnerJoiner(suffix_a='_game', suffix_b='_max'),
@@ -491,7 +491,7 @@ JOIN_CASES = [
             {'player_id': 2, 'username': 'jay', 'score': 451},
             {'player_id': 3, 'username': 'Destroyer', 'score': 999},
         ],
-        etalon=[
+        ground_truth=[
             {'game_id': 1, 'player_id': 3, 'score_game': 99, 'score_max': 999, 'username': 'Destroyer'},
             {'game_id': 2, 'player_id': 1, 'score_game': 17, 'score_max': 400, 'username': 'XeroX'},
             {'game_id': 3, 'player_id': 1, 'score_game': 22, 'score_max': 400, 'username': 'XeroX'}
@@ -499,7 +499,7 @@ JOIN_CASES = [
         cmp_keys=('game_id', 'player_id', 'score', 'username'),
         join_data_left_items=(0, 1),
         join_data_right_items=(0,),
-        join_etalon_items=(1, 2)
+        join_ground_truth_items=(1, 2)
     )
 ]
 
@@ -508,17 +508,17 @@ JOIN_CASES = [
 def test_joiner(case: JoinCase) -> None:
     joiner_data_left_rows = [copy.deepcopy(case.data_left[i]) for i in case.join_data_left_items]
     joiner_data_right_rows = [copy.deepcopy(case.data_right[i]) for i in case.join_data_right_items]
-    joiner_etalon_rows = [copy.deepcopy(case.etalon[i]) for i in case.join_etalon_items]
+    joiner_ground_truth_rows = [copy.deepcopy(case.ground_truth[i]) for i in case.join_ground_truth_items]
 
     key_func = _Key(*case.cmp_keys)
 
     joiner_result = case.joiner(case.join_keys, iter(joiner_data_left_rows), iter(joiner_data_right_rows))
     assert isinstance(joiner_result, tp.Iterator)
-    assert sorted(joiner_etalon_rows, key=key_func) == sorted(joiner_result, key=key_func)
+    assert sorted(joiner_ground_truth_rows, key=key_func) == sorted(joiner_result, key=key_func)
 
     result = ops.Join(case.joiner, case.join_keys)(iter(case.data_left), iter(case.data_right))
     assert isinstance(result, tp.Iterator)
-    assert sorted(case.etalon, key=key_func) == sorted(result, key=key_func)
+    assert sorted(case.ground_truth, key=key_func) == sorted(result, key=key_func)
 
 
 # ########## HEAVY TESTS WITH MEMORY TRACKING ##########
