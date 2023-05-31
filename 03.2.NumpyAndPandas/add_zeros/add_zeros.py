@@ -7,3 +7,4 @@ def add_zeros(x: np.ndarray) -> np.ndarray:
     :param x: array,
     :return: array with zeros inserted
     """
+    return np.insert(x, np.arange(1, len(x), 1), 0)
